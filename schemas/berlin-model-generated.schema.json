@@ -1,0 +1,1702 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/berlin-model-generated.schema.json",
+  "title": "Berlin Model Cases Schema",
+  "description": "FGAI4H TG Symptom Cases Schema \u2013 Berlin (generated)",
+  "$comment": "This model is auto-generated! Don't manually make changes you wish to persist.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "caseData": {
+        "$ref": "#/definitions/case"
+      },
+      "valuesToPredict": {
+        "type": "object",
+        "properties": {
+          "expectedTriageLevel": {
+            "type": "string",
+            "enum": [
+              "EC",
+              "PC",
+              "SC"
+            ]
+          },
+          "expectedCondition": {
+            "$ref": "#/definitions/condition"
+          },
+          "otherRelevantDifferentials": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/condition"
+            }
+          },
+          "impossibleConditions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/condition"
+            }
+          },
+          "correctCondition": {
+            "$ref": "#/definitions/condition"
+          }
+        },
+        "required": [
+          "expectedTriageLevel",
+          "expectedCondition",
+          "otherRelevantDifferentials",
+          "impossibleConditions"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "caseData",
+      "valuesToPredict"
+    ],
+    "additionalProperties": false
+  },
+  "definitions": {
+    "case": {
+      "type": "object",
+      "properties": {
+        "caseId": {
+          "type": "string",
+          "description": "Case ID"
+        },
+        "metaData": {
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "string",
+              "description": "Human readable case description"
+            },
+            "caseCreator": {
+              "type": "string",
+              "description": "Company and/or individual identifier of the case's creator"
+            },
+            "spreadsheetCaseId": {
+              "type": "string",
+              "description": "Identifier of this case in the originating spreadsheet"
+            }
+          },
+          "required": [
+            "description"
+          ],
+          "additionalProperties": false
+        },
+        "profileInformation": {
+          "type": "object",
+          "description": "Patient profile information",
+          "properties": {
+            "age": {
+              "type": "number",
+              "description": "Age"
+            },
+            "biologicalSex": {
+              "type": "string",
+              "enum": [
+                "male",
+                "female"
+              ],
+              "description": "Biological sex"
+            }
+          },
+          "required": [
+            "age",
+            "biologicalSex"
+          ],
+          "additionalProperties": false
+        },
+        "presentingComplaint": {
+          "$ref": "#/definitions/symptom"
+        },
+        "otherFeatures": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/symptom"
+          }
+        }
+      },
+      "required": [
+        "caseId",
+        "profileInformation",
+        "presentingComplaint",
+        "otherFeatures"
+      ],
+      "additionalProperties": false
+    },
+    "symptom": {
+      "oneOf": [
+        {
+          "title": "Abdominal pain (finding)",
+          "$ref": "#/definitions/3a04b8570062b71a018c8bde2a5bdb4c"
+        },
+        {
+          "title": "Diarrhea (finding)",
+          "$ref": "#/definitions/8e65c9133d5eabcf66eb73a65c018235"
+        },
+        {
+          "title": "Vomiting (disorder)",
+          "$ref": "#/definitions/3a6a8a383df2c37fcd8a25f4acb98e85"
+        },
+        {
+          "title": "Dysuria (finding)",
+          "$ref": "#/definitions/41520e579df9e4b650a0c06e5f0b4042"
+        },
+        {
+          "title": "Increased frequency of urination (finding)",
+          "$ref": "#/definitions/e0a15bc5d76e107e904ef8b6d784c5f8"
+        },
+        {
+          "title": "Blood in urine (finding)",
+          "$ref": "#/definitions/c32fbaf84adfa4ac3362a89ff22635d4"
+        },
+        {
+          "title": "Weight loss (finding)",
+          "$ref": "#/definitions/7b1c488fc0f4fccfcf3d7dc048444113"
+        },
+        {
+          "title": "Fever (finding)",
+          "$ref": "#/definitions/75cd4ec705062ba5ca4ce9d0f7a3da6e"
+        },
+        {
+          "title": "Heartburn (finding)",
+          "$ref": "#/definitions/9169fb66e1c761d3024e1a27be74101a"
+        },
+        {
+          "title": "Menstrual period late (finding)",
+          "$ref": "#/definitions/f17ba8017053fad3fbbe2fea8d7f960b"
+        }
+      ]
+    },
+    "symptomState": {
+      "type": "string",
+      "enum": [
+        "present",
+        "absent",
+        "unsure"
+      ],
+      "description": "Presence of the symptom"
+    },
+    "attribute": {
+      "oneOf": [
+        {
+          "title": "Finding site (attribute)",
+          "$ref": "#/definitions/b57c3c7777eb6846fa088b889adc50af"
+        },
+        {
+          "title": "Characteristic of pain (observable entity)",
+          "$ref": "#/definitions/427a1d1a0d75c72af25d89696d5e0ead"
+        },
+        {
+          "title": "Pain intensity (observable entity)",
+          "$ref": "#/definitions/43eec3bb02398aa63f53e9f82cd6644c"
+        },
+        {
+          "title": "Time since onset",
+          "$ref": "#/definitions/93fd11743b71fe0f8f15cbbd36a2dbb1"
+        },
+        {
+          "title": "Contents of stool (observable entity)",
+          "$ref": "#/definitions/ab1defe40ac0d4b88d6474483be12bac"
+        }
+      ]
+    },
+    "value": {
+      "oneOf": [
+        {
+          "title": "Structure of left lower quadrant of abdomen (body structure)",
+          "$ref": "#/definitions/b0a9ca94930dcf992dad1b29343b08ea"
+        },
+        {
+          "title": "Structure of right lower quadrant of abdomen (body structure)",
+          "$ref": "#/definitions/0f7f8cfe7e12c3a4a1558a9c3a1b3454"
+        },
+        {
+          "title": "Structure of left upper quadrant of abdomen (body structure)",
+          "$ref": "#/definitions/0e80a75a59339299ba6e6e117d63397d"
+        },
+        {
+          "title": "Structure of right upper quadrant of abdomen (body structure)",
+          "$ref": "#/definitions/1f75a2370b4f6ed438e01e5d099a4822"
+        },
+        {
+          "title": "Hypogastric region structure (body structure)",
+          "$ref": "#/definitions/858b635cd3ddc74c840e59f9538b3aa0"
+        },
+        {
+          "title": "Epigastric region structure (body structure)",
+          "$ref": "#/definitions/91f6224aca38e8443cace070bb8e723b"
+        },
+        {
+          "title": "Structure of abdominopelvic cavity and/or content of abdominopelvic cavity and/or anterior abdominal wall (body structure)",
+          "$ref": "#/definitions/55cee8576a49af5c9aa1ed552669e8be"
+        },
+        {
+          "title": "Structure of central region of abdomen (body structure)",
+          "$ref": "#/definitions/b6755fcd9c5278c345e863aa3aab09e3"
+        },
+        {
+          "title": "Sharp sensation quality (qualifier value)",
+          "$ref": "#/definitions/eeb72e33f12ee8c9b7d086fe7a62db18"
+        },
+        {
+          "title": "Cramping sensation quality (qualifier value)",
+          "$ref": "#/definitions/299e4d939f31f9a91bfcf4968f6bbd40"
+        },
+        {
+          "title": "Dull sensation quality (qualifier value)",
+          "$ref": "#/definitions/80a52271beda442bc28357f85dd70563"
+        },
+        {
+          "title": "Mild (qualifier value)",
+          "$ref": "#/definitions/57d96ea9bf80b712a14478b32dbccaa8"
+        },
+        {
+          "title": "Moderate (severity modifier) (qualifier value)",
+          "$ref": "#/definitions/61fc06062a354f1d24d09d47257739db"
+        },
+        {
+          "title": "Severe (severity modifier) (qualifier value)",
+          "$ref": "#/definitions/5ea1458a4bb2989057c6f60cc4dcbd40"
+        },
+        {
+          "title": "less than a day",
+          "$ref": "#/definitions/c3fe9718760fa95b3164e56a1a9981db"
+        },
+        {
+          "title": "a couple days (1-2 days)",
+          "$ref": "#/definitions/d2ec2b60fbcefb37db2863fb9a5b70d3"
+        },
+        {
+          "title": "3 days - to 1 week",
+          "$ref": "#/definitions/35dd1fc8f2ac68f7758809dc4a10657f"
+        },
+        {
+          "title": "a few weeks (1 weeks - 1 month)",
+          "$ref": "#/definitions/ad3f8ad0a9df876cbef2ec1d87104e48"
+        },
+        {
+          "title": "1 month to 1 year",
+          "$ref": "#/definitions/7480981b88fbe43b47fa99e4c353a87d"
+        },
+        {
+          "title": "a year or more",
+          "$ref": "#/definitions/c0970eba153a8256c83b0575c86c0ce5"
+        },
+        {
+          "title": "Blood (substance)",
+          "$ref": "#/definitions/0f77ba828c65101cf7fb943eb34f2a21"
+        },
+        {
+          "title": "Water (substance)",
+          "$ref": "#/definitions/c53db84792da14ac9ae1daf042b5fad8"
+        },
+        {
+          "title": "Mucus (substance)",
+          "$ref": "#/definitions/d07bc7629cfcc98a5712482ad6d226e8"
+        }
+      ]
+    },
+    "condition": {
+      "oneOf": [
+        {
+          "title": "Inflammatory bowel disease (disorder)",
+          "$ref": "#/definitions/fdf0d91875718a5bc5a393440567fc7d"
+        },
+        {
+          "title": "Gastroesophageal reflux disease (disorder)",
+          "$ref": "#/definitions/b556155729b6e32a3673dfeaebe1af51"
+        },
+        {
+          "title": "Urinary tract infectious disease (disorder)",
+          "$ref": "#/definitions/c37a406deb2729d29be35f569ee22051"
+        },
+        {
+          "title": "Viral gastroenteritis (disorder)",
+          "$ref": "#/definitions/b88ceb5fef9d8828a72d7218c01d52d7"
+        },
+        {
+          "title": "Malignant tumor of urinary bladder (disorder)",
+          "$ref": "#/definitions/35954a1103f499d0714f066f3aa349c6"
+        },
+        {
+          "title": "Acute cholecystitis (disorder)",
+          "$ref": "#/definitions/a550d798c25e02008095828033eb065e"
+        },
+        {
+          "title": "Appendicitis (disorder)",
+          "$ref": "#/definitions/5ad2d6ee338b68d257c73dfdc373b16c"
+        },
+        {
+          "title": "Ectopic pregnancy (disorder)",
+          "$ref": "#/definitions/ae7f34aa5a05520e3afec0505a0f5411"
+        },
+        {
+          "title": "Irritable bowel syndrome (disorder)",
+          "$ref": "#/definitions/c4d1eca32646dfbce781a72300ce416a"
+        },
+        {
+          "title": "Acute pyelonephritis (disorder)",
+          "$ref": "#/definitions/e9951524312a06d3d15936a4d38d94c6"
+        },
+        {
+          "title": "Abdominal pain (finding)",
+          "$ref": "#/definitions/3a04b8570062b71a018c8bde2a5bdb4c"
+        }
+      ]
+    },
+    "fdf0d91875718a5bc5a393440567fc7d": {
+      "type": "object",
+      "title": "Inflammatory bowel disease (disorder)",
+      "properties": {
+        "id": {
+          "const": "fdf0d91875718a5bc5a393440567fc7d",
+          "default": "fdf0d91875718a5bc5a393440567fc7d"
+        },
+        "name": {
+          "const": "Inflammatory bowel disease (disorder)",
+          "default": "Inflammatory bowel disease (disorder)"
+        },
+        "sctid": {
+          "const": 24526004,
+          "default": 24526004
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid"
+      ],
+      "additionalProperties": false
+    },
+    "b556155729b6e32a3673dfeaebe1af51": {
+      "type": "object",
+      "title": "Gastroesophageal reflux disease (disorder)",
+      "properties": {
+        "id": {
+          "const": "b556155729b6e32a3673dfeaebe1af51",
+          "default": "b556155729b6e32a3673dfeaebe1af51"
+        },
+        "name": {
+          "const": "Gastroesophageal reflux disease (disorder)",
+          "default": "Gastroesophageal reflux disease (disorder)"
+        },
+        "sctid": {
+          "const": 235595009,
+          "default": 235595009
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid"
+      ],
+      "additionalProperties": false
+    },
+    "c37a406deb2729d29be35f569ee22051": {
+      "type": "object",
+      "title": "Urinary tract infectious disease (disorder)",
+      "properties": {
+        "id": {
+          "const": "c37a406deb2729d29be35f569ee22051",
+          "default": "c37a406deb2729d29be35f569ee22051"
+        },
+        "name": {
+          "const": "Urinary tract infectious disease (disorder)",
+          "default": "Urinary tract infectious disease (disorder)"
+        },
+        "sctid": {
+          "const": 68566005,
+          "default": 68566005
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid"
+      ],
+      "additionalProperties": false
+    },
+    "b88ceb5fef9d8828a72d7218c01d52d7": {
+      "type": "object",
+      "title": "Viral gastroenteritis (disorder)",
+      "properties": {
+        "id": {
+          "const": "b88ceb5fef9d8828a72d7218c01d52d7",
+          "default": "b88ceb5fef9d8828a72d7218c01d52d7"
+        },
+        "name": {
+          "const": "Viral gastroenteritis (disorder)",
+          "default": "Viral gastroenteritis (disorder)"
+        },
+        "sctid": {
+          "const": 111843007,
+          "default": 111843007
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid"
+      ],
+      "additionalProperties": false
+    },
+    "35954a1103f499d0714f066f3aa349c6": {
+      "type": "object",
+      "title": "Malignant tumor of urinary bladder (disorder)",
+      "properties": {
+        "id": {
+          "const": "35954a1103f499d0714f066f3aa349c6",
+          "default": "35954a1103f499d0714f066f3aa349c6"
+        },
+        "name": {
+          "const": "Malignant tumor of urinary bladder (disorder)",
+          "default": "Malignant tumor of urinary bladder (disorder)"
+        },
+        "sctid": {
+          "const": 399326009,
+          "default": 399326009
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid"
+      ],
+      "additionalProperties": false
+    },
+    "a550d798c25e02008095828033eb065e": {
+      "type": "object",
+      "title": "Acute cholecystitis (disorder)",
+      "properties": {
+        "id": {
+          "const": "a550d798c25e02008095828033eb065e",
+          "default": "a550d798c25e02008095828033eb065e"
+        },
+        "name": {
+          "const": "Acute cholecystitis (disorder)",
+          "default": "Acute cholecystitis (disorder)"
+        },
+        "sctid": {
+          "const": 65275009,
+          "default": 65275009
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid"
+      ],
+      "additionalProperties": false
+    },
+    "5ad2d6ee338b68d257c73dfdc373b16c": {
+      "type": "object",
+      "title": "Appendicitis (disorder)",
+      "properties": {
+        "id": {
+          "const": "5ad2d6ee338b68d257c73dfdc373b16c",
+          "default": "5ad2d6ee338b68d257c73dfdc373b16c"
+        },
+        "name": {
+          "const": "Appendicitis (disorder)",
+          "default": "Appendicitis (disorder)"
+        },
+        "sctid": {
+          "const": 74400008,
+          "default": 74400008
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid"
+      ],
+      "additionalProperties": false
+    },
+    "ae7f34aa5a05520e3afec0505a0f5411": {
+      "type": "object",
+      "title": "Ectopic pregnancy (disorder)",
+      "properties": {
+        "id": {
+          "const": "ae7f34aa5a05520e3afec0505a0f5411",
+          "default": "ae7f34aa5a05520e3afec0505a0f5411"
+        },
+        "name": {
+          "const": "Ectopic pregnancy (disorder)",
+          "default": "Ectopic pregnancy (disorder)"
+        },
+        "sctid": {
+          "const": 34801009,
+          "default": 34801009
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid"
+      ],
+      "additionalProperties": false
+    },
+    "c4d1eca32646dfbce781a72300ce416a": {
+      "type": "object",
+      "title": "Irritable bowel syndrome (disorder)",
+      "properties": {
+        "id": {
+          "const": "c4d1eca32646dfbce781a72300ce416a",
+          "default": "c4d1eca32646dfbce781a72300ce416a"
+        },
+        "name": {
+          "const": "Irritable bowel syndrome (disorder)",
+          "default": "Irritable bowel syndrome (disorder)"
+        },
+        "sctid": {
+          "const": 10743008,
+          "default": 10743008
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid"
+      ],
+      "additionalProperties": false
+    },
+    "e9951524312a06d3d15936a4d38d94c6": {
+      "type": "object",
+      "title": "Acute pyelonephritis (disorder)",
+      "properties": {
+        "id": {
+          "const": "e9951524312a06d3d15936a4d38d94c6",
+          "default": "e9951524312a06d3d15936a4d38d94c6"
+        },
+        "name": {
+          "const": "Acute pyelonephritis (disorder)",
+          "default": "Acute pyelonephritis (disorder)"
+        },
+        "sctid": {
+          "const": 36689008,
+          "default": 36689008
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid"
+      ],
+      "additionalProperties": false
+    },
+    "3a04b8570062b71a018c8bde2a5bdb4c": {
+      "type": "object",
+      "title": "Abdominal pain (finding)",
+      "properties": {
+        "id": {
+          "const": "3a04b8570062b71a018c8bde2a5bdb4c",
+          "default": "3a04b8570062b71a018c8bde2a5bdb4c"
+        },
+        "name": {
+          "const": "Abdominal pain (finding)",
+          "default": "Abdominal pain (finding)"
+        },
+        "sctid": {
+          "const": 21522001,
+          "default": 21522001
+        },
+        "state": {
+          "$ref": "#/definitions/symptomState"
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "title": "Finding site (attribute)",
+                "$ref": "#/definitions/b57c3c7777eb6846fa088b889adc50af"
+              },
+              {
+                "title": "Characteristic of pain (observable entity)",
+                "$ref": "#/definitions/427a1d1a0d75c72af25d89696d5e0ead"
+              },
+              {
+                "title": "Pain intensity (observable entity)",
+                "$ref": "#/definitions/43eec3bb02398aa63f53e9f82cd6644c"
+              },
+              {
+                "title": "Time since onset",
+                "$ref": "#/definitions/93fd11743b71fe0f8f15cbbd36a2dbb1"
+              }
+            ]
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid",
+        "state",
+        "attributes"
+      ],
+      "additionalProperties": false
+    },
+    "b57c3c7777eb6846fa088b889adc50af": {
+      "type": "object",
+      "title": "Finding site (attribute)",
+      "properties": {
+        "id": {
+          "const": "b57c3c7777eb6846fa088b889adc50af",
+          "default": "b57c3c7777eb6846fa088b889adc50af"
+        },
+        "name": {
+          "const": "Finding site (attribute)",
+          "default": "Finding site (attribute)"
+        },
+        "sctid": {
+          "const": 363698007,
+          "default": 363698007
+        },
+        "value": {
+          "oneOf": [
+            {
+              "title": "Structure of left lower quadrant of abdomen (body structure)",
+              "$ref": "#/definitions/b0a9ca94930dcf992dad1b29343b08ea"
+            },
+            {
+              "title": "Structure of right lower quadrant of abdomen (body structure)",
+              "$ref": "#/definitions/0f7f8cfe7e12c3a4a1558a9c3a1b3454"
+            },
+            {
+              "title": "Structure of left upper quadrant of abdomen (body structure)",
+              "$ref": "#/definitions/0e80a75a59339299ba6e6e117d63397d"
+            },
+            {
+              "title": "Structure of right upper quadrant of abdomen (body structure)",
+              "$ref": "#/definitions/1f75a2370b4f6ed438e01e5d099a4822"
+            },
+            {
+              "title": "Hypogastric region structure (body structure)",
+              "$ref": "#/definitions/858b635cd3ddc74c840e59f9538b3aa0"
+            },
+            {
+              "title": "Epigastric region structure (body structure)",
+              "$ref": "#/definitions/91f6224aca38e8443cace070bb8e723b"
+            },
+            {
+              "title": "Structure of abdominopelvic cavity and/or content of abdominopelvic cavity and/or anterior abdominal wall (body structure)",
+              "$ref": "#/definitions/55cee8576a49af5c9aa1ed552669e8be"
+            },
+            {
+              "title": "Structure of central region of abdomen (body structure)",
+              "$ref": "#/definitions/b6755fcd9c5278c345e863aa3aab09e3"
+            }
+          ]
+        },
+        "scope": {
+          "const": "3a04b8570062b71a018c8bde2a5bdb4c",
+          "default": "3a04b8570062b71a018c8bde2a5bdb4c"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "427a1d1a0d75c72af25d89696d5e0ead": {
+      "type": "object",
+      "title": "Characteristic of pain (observable entity)",
+      "properties": {
+        "id": {
+          "const": "427a1d1a0d75c72af25d89696d5e0ead",
+          "default": "427a1d1a0d75c72af25d89696d5e0ead"
+        },
+        "name": {
+          "const": "Characteristic of pain (observable entity)",
+          "default": "Characteristic of pain (observable entity)"
+        },
+        "sctid": {
+          "const": 364625007,
+          "default": 364625007
+        },
+        "value": {
+          "oneOf": [
+            {
+              "title": "Sharp sensation quality (qualifier value)",
+              "$ref": "#/definitions/eeb72e33f12ee8c9b7d086fe7a62db18"
+            },
+            {
+              "title": "Cramping sensation quality (qualifier value)",
+              "$ref": "#/definitions/299e4d939f31f9a91bfcf4968f6bbd40"
+            },
+            {
+              "title": "Dull sensation quality (qualifier value)",
+              "$ref": "#/definitions/80a52271beda442bc28357f85dd70563"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "43eec3bb02398aa63f53e9f82cd6644c": {
+      "type": "object",
+      "title": "Pain intensity (observable entity)",
+      "properties": {
+        "id": {
+          "const": "43eec3bb02398aa63f53e9f82cd6644c",
+          "default": "43eec3bb02398aa63f53e9f82cd6644c"
+        },
+        "name": {
+          "const": "Pain intensity (observable entity)",
+          "default": "Pain intensity (observable entity)"
+        },
+        "sctid": {
+          "const": 406127006,
+          "default": 406127006
+        },
+        "value": {
+          "oneOf": [
+            {
+              "title": "Mild (qualifier value)",
+              "$ref": "#/definitions/57d96ea9bf80b712a14478b32dbccaa8"
+            },
+            {
+              "title": "Moderate (severity modifier) (qualifier value)",
+              "$ref": "#/definitions/61fc06062a354f1d24d09d47257739db"
+            },
+            {
+              "title": "Severe (severity modifier) (qualifier value)",
+              "$ref": "#/definitions/5ea1458a4bb2989057c6f60cc4dcbd40"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "93fd11743b71fe0f8f15cbbd36a2dbb1": {
+      "type": "object",
+      "title": "Time since onset",
+      "properties": {
+        "id": {
+          "const": "93fd11743b71fe0f8f15cbbd36a2dbb1",
+          "default": "93fd11743b71fe0f8f15cbbd36a2dbb1"
+        },
+        "name": {
+          "const": "Time since onset",
+          "default": "Time since onset"
+        },
+        "customId": {
+          "const": 1,
+          "default": 1
+        },
+        "value": {
+          "oneOf": [
+            {
+              "title": "less than a day",
+              "$ref": "#/definitions/c3fe9718760fa95b3164e56a1a9981db"
+            },
+            {
+              "title": "a couple days (1-2 days)",
+              "$ref": "#/definitions/d2ec2b60fbcefb37db2863fb9a5b70d3"
+            },
+            {
+              "title": "3 days - to 1 week",
+              "$ref": "#/definitions/35dd1fc8f2ac68f7758809dc4a10657f"
+            },
+            {
+              "title": "a few weeks (1 weeks - 1 month)",
+              "$ref": "#/definitions/ad3f8ad0a9df876cbef2ec1d87104e48"
+            },
+            {
+              "title": "1 month to 1 year",
+              "$ref": "#/definitions/7480981b88fbe43b47fa99e4c353a87d"
+            },
+            {
+              "title": "a year or more",
+              "$ref": "#/definitions/c0970eba153a8256c83b0575c86c0ce5"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "customId",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "8e65c9133d5eabcf66eb73a65c018235": {
+      "type": "object",
+      "title": "Diarrhea (finding)",
+      "properties": {
+        "id": {
+          "const": "8e65c9133d5eabcf66eb73a65c018235",
+          "default": "8e65c9133d5eabcf66eb73a65c018235"
+        },
+        "name": {
+          "const": "Diarrhea (finding)",
+          "default": "Diarrhea (finding)"
+        },
+        "sctid": {
+          "const": 62315008,
+          "default": 62315008
+        },
+        "state": {
+          "$ref": "#/definitions/symptomState"
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "title": "Contents of stool (observable entity)",
+                "$ref": "#/definitions/ab1defe40ac0d4b88d6474483be12bac"
+              }
+            ]
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid",
+        "state",
+        "attributes"
+      ],
+      "additionalProperties": false
+    },
+    "ab1defe40ac0d4b88d6474483be12bac": {
+      "type": "object",
+      "title": "Contents of stool (observable entity)",
+      "properties": {
+        "id": {
+          "const": "ab1defe40ac0d4b88d6474483be12bac",
+          "default": "ab1defe40ac0d4b88d6474483be12bac"
+        },
+        "name": {
+          "const": "Contents of stool (observable entity)",
+          "default": "Contents of stool (observable entity)"
+        },
+        "sctid": {
+          "const": 249622004,
+          "default": 249622004
+        },
+        "value": {
+          "oneOf": [
+            {
+              "title": "Blood (substance)",
+              "$ref": "#/definitions/0f77ba828c65101cf7fb943eb34f2a21"
+            },
+            {
+              "title": "Water (substance)",
+              "$ref": "#/definitions/c53db84792da14ac9ae1daf042b5fad8"
+            },
+            {
+              "title": "Mucus (substance)",
+              "$ref": "#/definitions/d07bc7629cfcc98a5712482ad6d226e8"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "3a6a8a383df2c37fcd8a25f4acb98e85": {
+      "type": "object",
+      "title": "Vomiting (disorder)",
+      "properties": {
+        "id": {
+          "const": "3a6a8a383df2c37fcd8a25f4acb98e85",
+          "default": "3a6a8a383df2c37fcd8a25f4acb98e85"
+        },
+        "name": {
+          "const": "Vomiting (disorder)",
+          "default": "Vomiting (disorder)"
+        },
+        "sctid": {
+          "const": 422400008,
+          "default": 422400008
+        },
+        "state": {
+          "$ref": "#/definitions/symptomState"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid",
+        "state"
+      ],
+      "additionalProperties": false
+    },
+    "41520e579df9e4b650a0c06e5f0b4042": {
+      "type": "object",
+      "title": "Dysuria (finding)",
+      "properties": {
+        "id": {
+          "const": "41520e579df9e4b650a0c06e5f0b4042",
+          "default": "41520e579df9e4b650a0c06e5f0b4042"
+        },
+        "name": {
+          "const": "Dysuria (finding)",
+          "default": "Dysuria (finding)"
+        },
+        "sctid": {
+          "const": 49650001,
+          "default": 49650001
+        },
+        "state": {
+          "$ref": "#/definitions/symptomState"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid",
+        "state"
+      ],
+      "additionalProperties": false
+    },
+    "e0a15bc5d76e107e904ef8b6d784c5f8": {
+      "type": "object",
+      "title": "Increased frequency of urination (finding)",
+      "properties": {
+        "id": {
+          "const": "e0a15bc5d76e107e904ef8b6d784c5f8",
+          "default": "e0a15bc5d76e107e904ef8b6d784c5f8"
+        },
+        "name": {
+          "const": "Increased frequency of urination (finding)",
+          "default": "Increased frequency of urination (finding)"
+        },
+        "sctid": {
+          "const": 162116003,
+          "default": 162116003
+        },
+        "state": {
+          "$ref": "#/definitions/symptomState"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid",
+        "state"
+      ],
+      "additionalProperties": false
+    },
+    "c32fbaf84adfa4ac3362a89ff22635d4": {
+      "type": "object",
+      "title": "Blood in urine (finding)",
+      "properties": {
+        "id": {
+          "const": "c32fbaf84adfa4ac3362a89ff22635d4",
+          "default": "c32fbaf84adfa4ac3362a89ff22635d4"
+        },
+        "name": {
+          "const": "Blood in urine (finding)",
+          "default": "Blood in urine (finding)"
+        },
+        "sctid": {
+          "const": 34436003,
+          "default": 34436003
+        },
+        "state": {
+          "$ref": "#/definitions/symptomState"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid",
+        "state"
+      ],
+      "additionalProperties": false
+    },
+    "7b1c488fc0f4fccfcf3d7dc048444113": {
+      "type": "object",
+      "title": "Weight loss (finding)",
+      "properties": {
+        "id": {
+          "const": "7b1c488fc0f4fccfcf3d7dc048444113",
+          "default": "7b1c488fc0f4fccfcf3d7dc048444113"
+        },
+        "name": {
+          "const": "Weight loss (finding)",
+          "default": "Weight loss (finding)"
+        },
+        "sctid": {
+          "const": 89362005,
+          "default": 89362005
+        },
+        "state": {
+          "$ref": "#/definitions/symptomState"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid",
+        "state"
+      ],
+      "additionalProperties": false
+    },
+    "75cd4ec705062ba5ca4ce9d0f7a3da6e": {
+      "type": "object",
+      "title": "Fever (finding)",
+      "properties": {
+        "id": {
+          "const": "75cd4ec705062ba5ca4ce9d0f7a3da6e",
+          "default": "75cd4ec705062ba5ca4ce9d0f7a3da6e"
+        },
+        "name": {
+          "const": "Fever (finding)",
+          "default": "Fever (finding)"
+        },
+        "sctid": {
+          "const": 386661006,
+          "default": 386661006
+        },
+        "state": {
+          "$ref": "#/definitions/symptomState"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid",
+        "state"
+      ],
+      "additionalProperties": false
+    },
+    "9169fb66e1c761d3024e1a27be74101a": {
+      "type": "object",
+      "title": "Heartburn (finding)",
+      "properties": {
+        "id": {
+          "const": "9169fb66e1c761d3024e1a27be74101a",
+          "default": "9169fb66e1c761d3024e1a27be74101a"
+        },
+        "name": {
+          "const": "Heartburn (finding)",
+          "default": "Heartburn (finding)"
+        },
+        "sctid": {
+          "const": 16331000,
+          "default": 16331000
+        },
+        "state": {
+          "$ref": "#/definitions/symptomState"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid",
+        "state"
+      ],
+      "additionalProperties": false
+    },
+    "f17ba8017053fad3fbbe2fea8d7f960b": {
+      "type": "object",
+      "title": "Menstrual period late (finding)",
+      "properties": {
+        "id": {
+          "const": "f17ba8017053fad3fbbe2fea8d7f960b",
+          "default": "f17ba8017053fad3fbbe2fea8d7f960b"
+        },
+        "name": {
+          "const": "Menstrual period late (finding)",
+          "default": "Menstrual period late (finding)"
+        },
+        "sctid": {
+          "const": 84292000,
+          "default": 84292000
+        },
+        "state": {
+          "$ref": "#/definitions/symptomState"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid",
+        "state"
+      ],
+      "additionalProperties": false
+    },
+    "b0a9ca94930dcf992dad1b29343b08ea": {
+      "type": "object",
+      "title": "Structure of left lower quadrant of abdomen (body structure)",
+      "properties": {
+        "id": {
+          "const": "b0a9ca94930dcf992dad1b29343b08ea",
+          "default": "b0a9ca94930dcf992dad1b29343b08ea"
+        },
+        "name": {
+          "const": "Structure of left lower quadrant of abdomen (body structure)",
+          "default": "Structure of left lower quadrant of abdomen (body structure)"
+        },
+        "sctid": {
+          "const": 68505006,
+          "default": 68505006
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid"
+      ],
+      "additionalProperties": false
+    },
+    "0f7f8cfe7e12c3a4a1558a9c3a1b3454": {
+      "type": "object",
+      "title": "Structure of right lower quadrant of abdomen (body structure)",
+      "properties": {
+        "id": {
+          "const": "0f7f8cfe7e12c3a4a1558a9c3a1b3454",
+          "default": "0f7f8cfe7e12c3a4a1558a9c3a1b3454"
+        },
+        "name": {
+          "const": "Structure of right lower quadrant of abdomen (body structure)",
+          "default": "Structure of right lower quadrant of abdomen (body structure)"
+        },
+        "sctid": {
+          "const": 48544008,
+          "default": 48544008
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid"
+      ],
+      "additionalProperties": false
+    },
+    "0e80a75a59339299ba6e6e117d63397d": {
+      "type": "object",
+      "title": "Structure of left upper quadrant of abdomen (body structure)",
+      "properties": {
+        "id": {
+          "const": "0e80a75a59339299ba6e6e117d63397d",
+          "default": "0e80a75a59339299ba6e6e117d63397d"
+        },
+        "name": {
+          "const": "Structure of left upper quadrant of abdomen (body structure)",
+          "default": "Structure of left upper quadrant of abdomen (body structure)"
+        },
+        "sctid": {
+          "const": 86367003,
+          "default": 86367003
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid"
+      ],
+      "additionalProperties": false
+    },
+    "1f75a2370b4f6ed438e01e5d099a4822": {
+      "type": "object",
+      "title": "Structure of right upper quadrant of abdomen (body structure)",
+      "properties": {
+        "id": {
+          "const": "1f75a2370b4f6ed438e01e5d099a4822",
+          "default": "1f75a2370b4f6ed438e01e5d099a4822"
+        },
+        "name": {
+          "const": "Structure of right upper quadrant of abdomen (body structure)",
+          "default": "Structure of right upper quadrant of abdomen (body structure)"
+        },
+        "sctid": {
+          "const": 50519007,
+          "default": 50519007
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid"
+      ],
+      "additionalProperties": false
+    },
+    "858b635cd3ddc74c840e59f9538b3aa0": {
+      "type": "object",
+      "title": "Hypogastric region structure (body structure)",
+      "properties": {
+        "id": {
+          "const": "858b635cd3ddc74c840e59f9538b3aa0",
+          "default": "858b635cd3ddc74c840e59f9538b3aa0"
+        },
+        "name": {
+          "const": "Hypogastric region structure (body structure)",
+          "default": "Hypogastric region structure (body structure)"
+        },
+        "sctid": {
+          "const": 11708003,
+          "default": 11708003
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid"
+      ],
+      "additionalProperties": false
+    },
+    "91f6224aca38e8443cace070bb8e723b": {
+      "type": "object",
+      "title": "Epigastric region structure (body structure)",
+      "properties": {
+        "id": {
+          "const": "91f6224aca38e8443cace070bb8e723b",
+          "default": "91f6224aca38e8443cace070bb8e723b"
+        },
+        "name": {
+          "const": "Epigastric region structure (body structure)",
+          "default": "Epigastric region structure (body structure)"
+        },
+        "sctid": {
+          "const": 27947004,
+          "default": 27947004
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid"
+      ],
+      "additionalProperties": false
+    },
+    "55cee8576a49af5c9aa1ed552669e8be": {
+      "type": "object",
+      "title": "Structure of abdominopelvic cavity and/or content of abdominopelvic cavity and/or anterior abdominal wall (body structure)",
+      "properties": {
+        "id": {
+          "const": "55cee8576a49af5c9aa1ed552669e8be",
+          "default": "55cee8576a49af5c9aa1ed552669e8be"
+        },
+        "name": {
+          "const": "Structure of abdominopelvic cavity and/or content of abdominopelvic cavity and/or anterior abdominal wall (body structure)",
+          "default": "Structure of abdominopelvic cavity and/or content of abdominopelvic cavity and/or anterior abdominal wall (body structure)"
+        },
+        "sctid": {
+          "const": 818983003,
+          "default": 818983003
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid"
+      ],
+      "additionalProperties": false
+    },
+    "b6755fcd9c5278c345e863aa3aab09e3": {
+      "type": "object",
+      "title": "Structure of central region of abdomen (body structure)",
+      "properties": {
+        "id": {
+          "const": "b6755fcd9c5278c345e863aa3aab09e3",
+          "default": "b6755fcd9c5278c345e863aa3aab09e3"
+        },
+        "name": {
+          "const": "Structure of central region of abdomen (body structure)",
+          "default": "Structure of central region of abdomen (body structure)"
+        },
+        "sctid": {
+          "const": 422314007,
+          "default": 422314007
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid"
+      ],
+      "additionalProperties": false
+    },
+    "eeb72e33f12ee8c9b7d086fe7a62db18": {
+      "type": "object",
+      "title": "Sharp sensation quality (qualifier value)",
+      "properties": {
+        "id": {
+          "const": "eeb72e33f12ee8c9b7d086fe7a62db18",
+          "default": "eeb72e33f12ee8c9b7d086fe7a62db18"
+        },
+        "name": {
+          "const": "Sharp sensation quality (qualifier value)",
+          "default": "Sharp sensation quality (qualifier value)"
+        },
+        "sctid": {
+          "const": 410707003,
+          "default": 410707003
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid"
+      ],
+      "additionalProperties": false
+    },
+    "299e4d939f31f9a91bfcf4968f6bbd40": {
+      "type": "object",
+      "title": "Cramping sensation quality (qualifier value)",
+      "properties": {
+        "id": {
+          "const": "299e4d939f31f9a91bfcf4968f6bbd40",
+          "default": "299e4d939f31f9a91bfcf4968f6bbd40"
+        },
+        "name": {
+          "const": "Cramping sensation quality (qualifier value)",
+          "default": "Cramping sensation quality (qualifier value)"
+        },
+        "sctid": {
+          "const": 410709000,
+          "default": 410709000
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid"
+      ],
+      "additionalProperties": false
+    },
+    "80a52271beda442bc28357f85dd70563": {
+      "type": "object",
+      "title": "Dull sensation quality (qualifier value)",
+      "properties": {
+        "id": {
+          "const": "80a52271beda442bc28357f85dd70563",
+          "default": "80a52271beda442bc28357f85dd70563"
+        },
+        "name": {
+          "const": "Dull sensation quality (qualifier value)",
+          "default": "Dull sensation quality (qualifier value)"
+        },
+        "sctid": {
+          "const": 410708008,
+          "default": 410708008
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid"
+      ],
+      "additionalProperties": false
+    },
+    "57d96ea9bf80b712a14478b32dbccaa8": {
+      "type": "object",
+      "title": "Mild (qualifier value)",
+      "properties": {
+        "id": {
+          "const": "57d96ea9bf80b712a14478b32dbccaa8",
+          "default": "57d96ea9bf80b712a14478b32dbccaa8"
+        },
+        "name": {
+          "const": "Mild (qualifier value)",
+          "default": "Mild (qualifier value)"
+        },
+        "sctid": {
+          "const": 255604002,
+          "default": 255604002
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid"
+      ],
+      "additionalProperties": false
+    },
+    "61fc06062a354f1d24d09d47257739db": {
+      "type": "object",
+      "title": "Moderate (severity modifier) (qualifier value)",
+      "properties": {
+        "id": {
+          "const": "61fc06062a354f1d24d09d47257739db",
+          "default": "61fc06062a354f1d24d09d47257739db"
+        },
+        "name": {
+          "const": "Moderate (severity modifier) (qualifier value)",
+          "default": "Moderate (severity modifier) (qualifier value)"
+        },
+        "sctid": {
+          "const": 6736007,
+          "default": 6736007
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid"
+      ],
+      "additionalProperties": false
+    },
+    "5ea1458a4bb2989057c6f60cc4dcbd40": {
+      "type": "object",
+      "title": "Severe (severity modifier) (qualifier value)",
+      "properties": {
+        "id": {
+          "const": "5ea1458a4bb2989057c6f60cc4dcbd40",
+          "default": "5ea1458a4bb2989057c6f60cc4dcbd40"
+        },
+        "name": {
+          "const": "Severe (severity modifier) (qualifier value)",
+          "default": "Severe (severity modifier) (qualifier value)"
+        },
+        "sctid": {
+          "const": 24484000,
+          "default": 24484000
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid"
+      ],
+      "additionalProperties": false
+    },
+    "c3fe9718760fa95b3164e56a1a9981db": {
+      "type": "object",
+      "title": "less than a day",
+      "properties": {
+        "id": {
+          "const": "c3fe9718760fa95b3164e56a1a9981db",
+          "default": "c3fe9718760fa95b3164e56a1a9981db"
+        },
+        "name": {
+          "const": "less than a day",
+          "default": "less than a day"
+        },
+        "customId": {
+          "const": 100,
+          "default": 100
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "customId"
+      ],
+      "additionalProperties": false
+    },
+    "d2ec2b60fbcefb37db2863fb9a5b70d3": {
+      "type": "object",
+      "title": "a couple days (1-2 days)",
+      "properties": {
+        "id": {
+          "const": "d2ec2b60fbcefb37db2863fb9a5b70d3",
+          "default": "d2ec2b60fbcefb37db2863fb9a5b70d3"
+        },
+        "name": {
+          "const": "a couple days (1-2 days)",
+          "default": "a couple days (1-2 days)"
+        },
+        "customId": {
+          "const": 101,
+          "default": 101
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "customId"
+      ],
+      "additionalProperties": false
+    },
+    "35dd1fc8f2ac68f7758809dc4a10657f": {
+      "type": "object",
+      "title": "3 days - to 1 week",
+      "properties": {
+        "id": {
+          "const": "35dd1fc8f2ac68f7758809dc4a10657f",
+          "default": "35dd1fc8f2ac68f7758809dc4a10657f"
+        },
+        "name": {
+          "const": "3 days - to 1 week",
+          "default": "3 days - to 1 week"
+        },
+        "customId": {
+          "const": 102,
+          "default": 102
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "customId"
+      ],
+      "additionalProperties": false
+    },
+    "ad3f8ad0a9df876cbef2ec1d87104e48": {
+      "type": "object",
+      "title": "a few weeks (1 weeks - 1 month)",
+      "properties": {
+        "id": {
+          "const": "ad3f8ad0a9df876cbef2ec1d87104e48",
+          "default": "ad3f8ad0a9df876cbef2ec1d87104e48"
+        },
+        "name": {
+          "const": "a few weeks (1 weeks - 1 month)",
+          "default": "a few weeks (1 weeks - 1 month)"
+        },
+        "customId": {
+          "const": 103,
+          "default": 103
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "customId"
+      ],
+      "additionalProperties": false
+    },
+    "7480981b88fbe43b47fa99e4c353a87d": {
+      "type": "object",
+      "title": "1 month to 1 year",
+      "properties": {
+        "id": {
+          "const": "7480981b88fbe43b47fa99e4c353a87d",
+          "default": "7480981b88fbe43b47fa99e4c353a87d"
+        },
+        "name": {
+          "const": "1 month to 1 year",
+          "default": "1 month to 1 year"
+        },
+        "customId": {
+          "const": 104,
+          "default": 104
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "customId"
+      ],
+      "additionalProperties": false
+    },
+    "c0970eba153a8256c83b0575c86c0ce5": {
+      "type": "object",
+      "title": "a year or more",
+      "properties": {
+        "id": {
+          "const": "c0970eba153a8256c83b0575c86c0ce5",
+          "default": "c0970eba153a8256c83b0575c86c0ce5"
+        },
+        "name": {
+          "const": "a year or more",
+          "default": "a year or more"
+        },
+        "customId": {
+          "const": 105,
+          "default": 105
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "customId"
+      ],
+      "additionalProperties": false
+    },
+    "0f77ba828c65101cf7fb943eb34f2a21": {
+      "type": "object",
+      "title": "Blood (substance)",
+      "properties": {
+        "id": {
+          "const": "0f77ba828c65101cf7fb943eb34f2a21",
+          "default": "0f77ba828c65101cf7fb943eb34f2a21"
+        },
+        "name": {
+          "const": "Blood (substance)",
+          "default": "Blood (substance)"
+        },
+        "sctid": {
+          "const": 87612001,
+          "default": 87612001
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid"
+      ],
+      "additionalProperties": false
+    },
+    "c53db84792da14ac9ae1daf042b5fad8": {
+      "type": "object",
+      "title": "Water (substance)",
+      "properties": {
+        "id": {
+          "const": "c53db84792da14ac9ae1daf042b5fad8",
+          "default": "c53db84792da14ac9ae1daf042b5fad8"
+        },
+        "name": {
+          "const": "Water (substance)",
+          "default": "Water (substance)"
+        },
+        "sctid": {
+          "const": 11713004,
+          "default": 11713004
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid"
+      ],
+      "additionalProperties": false
+    },
+    "d07bc7629cfcc98a5712482ad6d226e8": {
+      "type": "object",
+      "title": "Mucus (substance)",
+      "properties": {
+        "id": {
+          "const": "d07bc7629cfcc98a5712482ad6d226e8",
+          "default": "d07bc7629cfcc98a5712482ad6d226e8"
+        },
+        "name": {
+          "const": "Mucus (substance)",
+          "default": "Mucus (substance)"
+        },
+        "sctid": {
+          "const": 49909006,
+          "default": 49909006
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sctid"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
