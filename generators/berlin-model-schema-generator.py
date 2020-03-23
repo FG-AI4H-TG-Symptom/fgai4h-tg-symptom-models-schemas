@@ -213,7 +213,8 @@ def generate_berlin_model_schema():
     ) as base_schema_json_file:
         base_schema_json = json.load(base_schema_json_file)
 
-    base_schema_json["$id"] = "http://example.com/berlin-model-generated.schema.json"
+    base_schema_json["$id"] = "https://raw.githubusercontent.com/FG-AI4H-TG-Symptom/" \
+                              "fgai4h-tg-symptom-models-schemas/master/schemas/berlin-model-generated.schema.json"
     base_schema_json[
         "description"
     ] = "FGAI4H TG Symptom Cases Schema – Berlin (generated)"

@@ -27,8 +27,10 @@ The source can be found in [this sheet](https://docs.google.com/spreadsheets/d/1
 Three schemas exist at the moment:
 
 - `schemas/berlin-model-manual.schema.json`, a hand-written first attempt to create a schema
-- `schemas/berlin-model-generated.schema.json`, a software-generated model aiming to accurately represent relationships
-- `schemas/berlin-model-generic.schema.json`, a hand-written version aiming to be a compatible super-set of the generated version by replacing all constants with types
+- `schemas/berlin-model-generated.schema.json`, a software-generated model aiming to accurately represent relationships  
+  Online reference: `https://raw.githubusercontent.com/FG-AI4H-TG-Symptom/fgai4h-tg-symptom-models-schemas/master/schemas/berlin-model-generated.schema.json`
+- `schemas/berlin-model-generic.schema.json`, a hand-written version aiming to be a compatible super-set of the generated version by replacing all constants with types  
+  Online reference: `https://raw.githubusercontent.com/FG-AI4H-TG-Symptom/fgai4h-tg-symptom-models-schemas/master/schemas/berlin-model-generic.schema.json`
 
 Put differently: the generic schema is the foundation for the generated schema. Everything valid under the generated schema must be valid under the generic schema, but not vice versa. The generated schema introduces constraints, nothing else.
 
