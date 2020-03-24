@@ -49,7 +49,8 @@
           "id": "41520e579df9e4b650a0c06e5f0b4042",
           "sctid": 49650001,
           "name": "Dysuria (finding)",
-          "state": "absent"
+          "state": "absent",
+          "attributes": []
         },
         {
           "id": "e0a15bc5d76e107e904ef8b6d784c5f8",

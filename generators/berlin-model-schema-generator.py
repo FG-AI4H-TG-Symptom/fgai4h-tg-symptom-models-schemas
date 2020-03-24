@@ -3,8 +3,8 @@ import json
 import hashlib
 
 
-def const(value):
-    return {"const": value, "default": value}
+def const(value, description):
+    return {"const": value, "default": value, "description": description}
 
 
 def generate_id(value):
@@ -17,7 +17,12 @@ def generate_attribute_id(attribute_sctid, symptom_id=None):
     )
 
 
-def object_template(id_raw, name, id_generator=lambda id_raw: generate_id(id_raw)):
+def object_template(
+    concept_name: str,
+    id_raw: str,
+    name: str,
+    id_generator=lambda id_raw: generate_id(id_raw),
+):
     sctid = None
     custom_id = None
     if "CUSTOM:" in id_raw:
@@ -29,16 +34,28 @@ def object_template(id_raw, name, id_generator=lambda id_raw: generate_id(id_raw
     object_ = {
         "type": "object",
         "title": name,
-        "properties": {"id": const(id_), "name": const(name)},
+        "properties": {
+            "id": const(id_, f"{concept_name} ID"),
+            "name": const(name, f"{concept_name} name"),
+        },
         "required": ["id", "name"],
         "additionalProperties": False,
     }
 
     if sctid is not None:
-        add_properties(object_, {"sctid": const(sctid)})
+        add_properties(
+            object_,
+            {
+                "sctid": const(
+                    sctid, f"{concept_name} SNOMED CT identifier (64-bit integer)"
+                )
+            },
+        )
 
     if custom_id is not None:
-        add_properties(object_, {"customId": const(custom_id)})
+        add_properties(
+            object_, {"customId": const(custom_id, f"{concept_name} custom identifier")}
+        )
 
     return object_
 
@@ -54,15 +71,17 @@ def add_properties(json_schema_object, properties: dict):
 
 
 def register_diagnosis(schema_json):
-    with open("../berlin-model-source/diagnosis.csv", "r") as diagnosis_csv_file:
-        diagnosis_csv = csv.reader(diagnosis_csv_file, delimiter=",")
+    with open("../berlin-model-source/conditions.csv", "r") as conditions_csv_file:
+        conditions_csv = csv.reader(conditions_csv_file, delimiter=",")
         conditions = []
-        for line_number, diagnosis in enumerate(diagnosis_csv):
+        for line_number, entry in enumerate(conditions_csv):
             if line_number == 0:
                 continue
 
-            [condition_sctid_raw, condition_name] = diagnosis
-            condition = object_template(condition_sctid_raw, condition_name)
+            [condition_sctid_raw, condition_name] = entry
+            condition = object_template(
+                "Condition", condition_sctid_raw, condition_name
+            )
             condition_id = lookup(condition, "id")
 
             schema_json["definitions"][condition_id] = condition
@@ -74,57 +93,72 @@ def register_diagnosis(schema_json):
         schema_json["definitions"]["condition"] = {"oneOf": conditions}
 
 
-def register_symptoms_and_attributes(schema_json):
+def register_clinical_findings_and_attributes(schema_json):
     with open(
-        "../berlin-model-source/symptom-attributes.csv", "r"
-    ) as symptom_attributes_csv_file:
-        symptom_attributes_csv = csv.reader(symptom_attributes_csv_file, delimiter=",")
-        symptoms = []
+        "../berlin-model-source/clinical_findings-attributes.csv", "r"
+    ) as clinical_findings_attributes_csv_file:
+        clinical_findings_attributes_csv = csv.reader(
+            clinical_findings_attributes_csv_file, delimiter=","
+        )
+        clinical_findings = []
         attributes = []
 
-        for line_number, diagnosis in enumerate(symptom_attributes_csv):
+        for line_number, entry in enumerate(clinical_findings_attributes_csv):
             if line_number == 0:
                 continue
 
             [
-                symptom_sctid_raw,
-                symptom_name,
+                clinical_finding_sctid_raw,
+                clinical_finding_name,
                 attribute_sctid_raw,
                 attribute_name,
-                attributes_scoped_to_concept,
-                has_value_set,
-            ] = diagnosis
+                attribute_scoped_to_clinical_finding,
+            ] = entry
 
-            attributes_scoped_to_concept = attributes_scoped_to_concept == "TRUE"
+            attribute_scoped_to_clinical_finding = (
+                attribute_scoped_to_clinical_finding == "TRUE"
+            )
 
-            if symptom_sctid_raw:
-                current_symptom = object_template(symptom_sctid_raw, symptom_name)
-                symptom_id = lookup(current_symptom, "id")
+            if clinical_finding_sctid_raw:
+                current_clinical_finding = object_template(
+                    "Clinical finding",
+                    clinical_finding_sctid_raw,
+                    clinical_finding_name,
+                )
+                clinical_finding_id = lookup(current_clinical_finding, "id")
+
                 add_properties(
-                    current_symptom, {"state": {"$ref": "#/definitions/symptomState"}}
+                    current_clinical_finding,
+                    {"state": {"$ref": "#/definitions/clinicalFindingState"}},
                 )
 
                 if attribute_sctid_raw:
-                    current_symptom["properties"]["attributes"] = {
+                    current_clinical_finding["properties"]["attributes"] = {
                         "type": "array",
                         "items": {"oneOf": []},  # attributes register themselves later
                         "uniqueItems": True,
                     }
-                    current_symptom["required"].append("attributes")
+                    current_clinical_finding["required"].append("attributes")
 
-                schema_json["definitions"][symptom_id] = current_symptom
+                schema_json["definitions"][
+                    clinical_finding_id
+                ] = current_clinical_finding
 
-                symptoms.append(
-                    {"title": symptom_name, "$ref": f"#/definitions/{symptom_id}"}
+                clinical_findings.append(
+                    {
+                        "title": clinical_finding_name,
+                        "$ref": f"#/definitions/{clinical_finding_id}",
+                    }
                 )
 
             if attribute_sctid_raw:
                 attribute = object_template(
+                    "Attribute",
                     attribute_sctid_raw,
                     attribute_name,
                     id_generator=lambda raw_id: (
-                        generate_attribute_id(raw_id, symptom_id)
-                        if attributes_scoped_to_concept
+                        generate_attribute_id(raw_id, clinical_finding_id)
+                        if attribute_scoped_to_clinical_finding
                         else generate_attribute_id(raw_id)
                     ),
                 )
@@ -133,59 +167,76 @@ def register_symptoms_and_attributes(schema_json):
                     attribute, {"value": {"oneOf": []}}
                 )  # values register themselves later
 
-                if attributes_scoped_to_concept:
-                    attribute["properties"]["scope"] = const(symptom_id)
-
-                schema_json["definitions"][attribute_id] = attribute
+                already_registered_attribute = schema_json["definitions"].get(
+                    attribute_id, None
+                )
 
                 attribute_ref = {
-                    "title": attribute_name,
+                    "title": attribute_name
+                    if already_registered_attribute is None
+                    else lookup(already_registered_attribute, "name"),
                     "$ref": f"#/definitions/{attribute_id}",
                 }
 
-                schema_json["definitions"][symptom_id]["properties"]["attributes"][
-                    "items"
-                ]["oneOf"].append(attribute_ref)
+                schema_json["definitions"][clinical_finding_id]["properties"][
+                    "attributes"
+                ]["items"]["oneOf"].append(attribute_ref)
+
+                if already_registered_attribute is not None:
+                    print(
+                        f"Attribute '{attribute_id}' ({attribute_sctid_raw} '{attribute_name}') "
+                        f"already defined, skipping."
+                    )
+                    continue
+
+                if attribute_scoped_to_clinical_finding:
+                    attribute["properties"]["scope"] = const(
+                        clinical_finding_id,
+                        "ID of clinical finding this attribute is scoped to",
+                    )
+
+                schema_json["definitions"][attribute_id] = attribute
 
                 attributes.append(attribute_ref)
 
-        schema_json["definitions"]["symptom"] = {"oneOf": symptoms}
+        schema_json["definitions"]["clinicalFinding"] = {"oneOf": clinical_findings}
         # likely not necessary: attributes are never referenced generically, always explicitly by a linked symptom
         schema_json["definitions"]["attribute"] = {"oneOf": attributes}
 
 
 def register_attribute_value_sets(schema_json):
     with open(
-        "../berlin-model-source/attribute-value-sets.csv", "r"
+        "../berlin-model-source/attributes-value_sets.csv", "r"
     ) as attribute_value_sets_csv_file:
         attribute_value_sets_csv = csv.reader(
             attribute_value_sets_csv_file, delimiter=","
         )
         values = []
 
-        for line_number, diagnosis in enumerate(attribute_value_sets_csv):
+        for line_number, entry in enumerate(attribute_value_sets_csv):
             if line_number == 0:
                 continue
 
             [
-                symptom_sctid_raw,
-                symptom_name,
+                clinical_finding_sctid_raw,
+                clinical_finding_name,
                 attribute_sctid_raw,
                 attribute_name,
                 value_sctid_raw,
                 value_name,
-            ] = diagnosis
+            ] = entry
 
             if attribute_sctid_raw:
                 current_attribute_id = (
                     generate_attribute_id(
-                        attribute_sctid_raw, generate_id(symptom_sctid_raw)
+                        attribute_sctid_raw, generate_id(clinical_finding_sctid_raw)
                     )
-                    if symptom_sctid_raw
+                    if clinical_finding_sctid_raw
                     else generate_attribute_id(attribute_sctid_raw)
                 )
 
             value = object_template(
+                "Value",
                 value_sctid_raw,
                 value_name,
                 id_generator=lambda _: generate_id(
@@ -213,8 +264,10 @@ def generate_berlin_model_schema():
     ) as base_schema_json_file:
         base_schema_json = json.load(base_schema_json_file)
 
-    base_schema_json["$id"] = "https://raw.githubusercontent.com/FG-AI4H-TG-Symptom/" \
-                              "fgai4h-tg-symptom-models-schemas/master/schemas/berlin-model-generated.schema.json"
+    base_schema_json["$id"] = (
+        "https://raw.githubusercontent.com/FG-AI4H-TG-Symptom/"
+        "fgai4h-tg-symptom-models-schemas/master/schemas/berlin-model-generated.schema.json"
+    )
     base_schema_json[
         "description"
     ] = "FGAI4H TG Symptom Cases Schema – Berlin (generated)"
@@ -223,7 +276,7 @@ def generate_berlin_model_schema():
     ] = "This model is auto-generated! Don't manually make changes you wish to persist."
 
     register_diagnosis(base_schema_json)
-    register_symptoms_and_attributes(base_schema_json)
+    register_clinical_findings_and_attributes(base_schema_json)
     register_attribute_value_sets(base_schema_json)
 
     with open(

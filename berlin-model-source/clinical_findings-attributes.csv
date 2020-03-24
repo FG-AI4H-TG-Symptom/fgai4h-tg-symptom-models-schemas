@@ -1,0 +1,15 @@
+Clinical finding SCTID,Clinical finding term,Attribute SCTID,Attribute term,SCT Concept Model
+21522001,Abdominal pain (finding),363698007,Finding site (attribute),TRUE
+,,364625007,Characteristic of pain (observable entity),FALSE
+,,406127006,Pain intensity (observable entity),FALSE
+,,CUSTOM:1,Time since onset,FALSE
+62315008,Diarrhea (finding),249622004,Contents of stool (observable entity),FALSE
+,,CUSTOM:1,⚠️ defined above 👀,
+422400008,Vomiting (disorder),CUSTOM:1,⚠️ defined above 👀,
+49650001,Dysuria (finding),CUSTOM:1,⚠️ defined above 👀,
+162116003,Increased frequency of urination (finding),,,
+34436003,Blood in urine (finding),CUSTOM:1,⚠️ defined above 👀,
+89362005,Weight loss (finding),,,
+386661006,Fever (finding),,,
+16331000,Heartburn (finding),CUSTOM:1,⚠️ defined above 👀,
+84292000,Menstrual period late (finding),,,

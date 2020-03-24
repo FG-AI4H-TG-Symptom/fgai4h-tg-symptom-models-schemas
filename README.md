@@ -26,7 +26,7 @@ The source can be found in [this sheet](https://docs.google.com/spreadsheets/d/1
 
 Three schemas exist at the moment:
 
-- `schemas/berlin-model-manual.schema.json`, a hand-written first attempt to create a schema
+- `schemas/berlin-model-manual.schema.json`, an outdated, hand-written first attempt to create a schema
 - `schemas/berlin-model-generated.schema.json`, a software-generated model aiming to accurately represent relationships  
   Online reference: `https://raw.githubusercontent.com/FG-AI4H-TG-Symptom/fgai4h-tg-symptom-models-schemas/master/schemas/berlin-model-generated.schema.json`
 - `schemas/berlin-model-generic.schema.json`, a hand-written version aiming to be a compatible super-set of the generated version by replacing all constants with types  
@@ -36,10 +36,9 @@ Put differently: the generic schema is the foundation for the generated schema. 
 
 The generator resides in `generators/berlin-model-schema-generator.py` and consumes the CSV sheets in `berlin-model-source/*.csv`.
 
-The CSV sheets are based on Alejandro Lopez Osornio's interoperability model. 
-Find the most relevant sheets here: [conditions](https://docs.google.com/spreadsheets/d/1dWXYWkn0h6je13zVEnSK0Bi14BsvqK2EXrrnv89Yge0/edit#gid=0),
-[symptoms–attributes](https://docs.google.com/spreadsheets/d/1dWXYWkn0h6je13zVEnSK0Bi14BsvqK2EXrrnv89Yge0/edit#gid=1243051470),
-[attributes–value sets](https://docs.google.com/spreadsheets/d/1dWXYWkn0h6je13zVEnSK0Bi14BsvqK2EXrrnv89Yge0/edit#gid=1283340500).
+The CSV sheets are based on Alejandro Lopez Osornio's interoperability model.
+They can be found [here](https://docs.google.com/spreadsheets/d/1fbFNh-vpqlIljIg2OMlXmLCbqeV9ISL4eRaepW0jmjo),
+or downloaded automatically by executing `berlin-model-source/download-csv.py`
 
 ### Cases
 
