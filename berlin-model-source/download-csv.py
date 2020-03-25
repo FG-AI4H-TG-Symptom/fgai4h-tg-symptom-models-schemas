@@ -11,9 +11,9 @@ SHEETS = {
 }
 
 
-def export_google_docs_sheet_to_csv(spreadsheet_id, sheet_id):
-    return f"https://docs.google.com/spreadsheets/u/0/d/{spreadsheet_id}/export?format=csv&id={spreadsheet_id}&gid={sheet_id}"
-    return f"https://docs.google.com/spreadsheets/d/{spreadsheet_id}/gviz/tq?tqx=out:csv&gid={sheet_id}"
+def export_google_docs_sheet_to_csv(spreadsheet_id: str, sheet_id: int):
+    return f"https://docs.google.com/spreadsheets/u/0/d/{spreadsheet_id}" \
+           f"/export?format=csv&id={spreadsheet_id}&gid={sheet_id}"
 
 
 for sheet_name, sheet_id in SHEETS.items():
