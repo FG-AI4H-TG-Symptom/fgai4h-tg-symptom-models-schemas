@@ -1,91 +1,94 @@
-[
-  {
-    "caseData": {
-      "caseId": "CC_1",
-      "profileInformation": {
-        "age": 25,
-        "biologicalSex": "female"
-      },
-      "presentingComplaint": {
-        "id": "3a04b8570062b71a018c8bde2a5bdb4c",
-        "sctid": 21522001,
-        "name": "Abdominal pain (finding)",
-        "state": "present",
-        "attributes": [
-          {
-            "id": "43eec3bb02398aa63f53e9f82cd6644c",
-            "sctid": 406127006,
-            "name": "Pain intensity (observable entity)",
-            "value": {
-              "id": "61fc06062a354f1d24d09d47257739db",
-              "sctid": 6736007,
-              "name": "Moderate (severity modifier) (qualifier value)"
+{
+  "caseSetName": "Berlin Model Official Doctor Cases",
+  "cases": [
+    {
+      "caseData": {
+        "caseId": "CC_1",
+        "profileInformation": {
+          "age": 25,
+          "biologicalSex": "female"
+        },
+        "presentingComplaint": {
+          "id": "3a04b8570062b71a018c8bde2a5bdb4c",
+          "sctid": 21522001,
+          "name": "Abdominal pain (finding)",
+          "state": "present",
+          "attributes": [
+            {
+              "id": "43eec3bb02398aa63f53e9f82cd6644c",
+              "sctid": 406127006,
+              "name": "Pain intensity (observable entity)",
+              "value": {
+                "id": "61fc06062a354f1d24d09d47257739db",
+                "sctid": 6736007,
+                "name": "Moderate (severity modifier) (qualifier value)"
+              }
+            },
+            {
+              "id": "93fd11743b71fe0f8f15cbbd36a2dbb1",
+              "customId": 1,
+              "name": "Time since onset",
+              "value": {
+                "id": "35dd1fc8f2ac68f7758809dc4a10657f",
+                "customId": 102,
+                "name": "3 days - to 1 week"
+              }
+            },
+            {
+              "id": "427a1d1a0d75c72af25d89696d5e0ead",
+              "sctid": 364625007,
+              "name": "Characteristic of pain (observable entity)",
+              "value": {
+                "id": "299e4d939f31f9a91bfcf4968f6bbd40",
+                "sctid": 410709000,
+                "name": "Cramping sensation quality (qualifier value)"
+              }
             }
+          ]
+        },
+        "otherFeatures": [
+          {
+            "id": "41520e579df9e4b650a0c06e5f0b4042",
+            "sctid": 49650001,
+            "name": "Dysuria (finding)",
+            "state": "absent",
+            "attributes": []
           },
           {
-            "id": "93fd11743b71fe0f8f15cbbd36a2dbb1",
-            "customId": 1,
-            "name": "Time since onset",
-            "value": {
-              "id": "35dd1fc8f2ac68f7758809dc4a10657f",
-              "customId": 102,
-              "name": "3 days - to 1 week"
-            }
+            "id": "e0a15bc5d76e107e904ef8b6d784c5f8",
+            "sctid": 162116003,
+            "name": "Increased frequency of urination (finding)",
+            "state": "present"
           },
           {
-            "id": "427a1d1a0d75c72af25d89696d5e0ead",
-            "sctid": 364625007,
-            "name": "Characteristic of pain (observable entity)",
-            "value": {
-              "id": "299e4d939f31f9a91bfcf4968f6bbd40",
-              "sctid": 410709000,
-              "name": "Cramping sensation quality (qualifier value)"
-            }
+            "id": "f17ba8017053fad3fbbe2fea8d7f960b",
+            "sctid": 84292000,
+            "name": "Menstrual period late (finding)",
+            "state": "unsure"
           }
         ]
       },
-      "otherFeatures": [
-        {
-          "id": "41520e579df9e4b650a0c06e5f0b4042",
-          "sctid": 49650001,
-          "name": "Dysuria (finding)",
-          "state": "absent",
-          "attributes": []
+      "valuesToPredict": {
+        "expectedTriageLevel": "PC",
+        "expectedCondition": {
+          "id": "c37a406deb2729d29be35f569ee22051",
+          "sctid": 68566005,
+          "name": "Urinary tract infectious disease (disorder)"
         },
-        {
-          "id": "e0a15bc5d76e107e904ef8b6d784c5f8",
-          "sctid": 162116003,
-          "name": "Increased frequency of urination (finding)",
-          "state": "present"
-        },
-        {
-          "id": "f17ba8017053fad3fbbe2fea8d7f960b",
-          "sctid": 84292000,
-          "name": "Menstrual period late (finding)",
-          "state": "unsure"
+        "otherRelevantDifferentials": [
+          {
+            "id": "ae7f34aa5a05520e3afec0505a0f5411",
+            "sctid": 34801009,
+            "name": "Ectopic pregnancy (disorder)"
+          }
+        ],
+        "impossibleConditions": [],
+        "correctCondition": {
+          "id": "c37a406deb2729d29be35f569ee22051",
+          "sctid": 68566005,
+          "name": "Urinary tract infectious disease (disorder)"
         }
-      ]
-    },
-    "valuesToPredict": {
-      "expectedTriageLevel": "PC",
-      "expectedCondition": {
-        "id": "c37a406deb2729d29be35f569ee22051",
-        "sctid": 68566005,
-        "name": "Urinary tract infectious disease (disorder)"
-      },
-      "otherRelevantDifferentials": [
-        {
-          "id": "ae7f34aa5a05520e3afec0505a0f5411",
-          "sctid": 34801009,
-          "name": "Ectopic pregnancy (disorder)"
-        }
-      ],
-      "impossibleConditions": [],
-      "correctCondition": {
-        "id": "c37a406deb2729d29be35f569ee22051",
-        "sctid": 68566005,
-        "name": "Urinary tract infectious disease (disorder)"
       }
     }
-  }
-]
+  ]
+}
