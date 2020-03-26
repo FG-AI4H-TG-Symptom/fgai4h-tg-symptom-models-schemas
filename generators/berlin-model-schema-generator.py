@@ -1,7 +1,7 @@
 import csv
 import json
 
-from .helpers import (
+from generators.helpers import (
     create_const,
     lookup_const,
     generate_id,
@@ -54,6 +54,7 @@ def register_clinical_findings_and_attributes(schema_json):
                 attribute_sctid_raw,
                 attribute_name,
                 attribute_scoped_to_clinical_finding,
+                attribute_value_multi_select,
             ] = entry
 
             attribute_scoped_to_clinical_finding = (
@@ -74,12 +75,18 @@ def register_clinical_findings_and_attributes(schema_json):
                 )
 
                 if attribute_sctid_raw:
-                    current_clinical_finding["properties"]["attributes"] = {
-                        "type": "array",
-                        "items": {"oneOf": []},  # attributes register themselves later
-                        "uniqueItems": True,
-                    }
-                    current_clinical_finding["required"].append("attributes")
+                    add_properties(
+                        current_clinical_finding,
+                        {
+                            "attributes": {
+                                "type": "array",
+                                "items": {
+                                    "oneOf": []
+                                },  # attributes register themselves later
+                                "uniqueItems": True,
+                            }
+                        },
+                    )
 
                 schema_json["definitions"][
                     clinical_finding_id
@@ -104,9 +111,32 @@ def register_clinical_findings_and_attributes(schema_json):
                     ),
                 )
                 attribute_id = lookup_const(attribute, "id")
-                add_properties(
-                    attribute, {"value": {"oneOf": []}}
-                )  # values register themselves later
+                if attribute_value_multi_select == "MULTI":
+                    # values register themselves later
+                    add_properties(
+                        attribute,
+                        {
+                            "values": {
+                                "type": "array",
+                                "description": "Possible values for this attribute "
+                                "(at least one, multi-selection possible)",
+                                "items": {"oneOf": []},
+                                "uniqueItems": True,
+                                "minItems": 1,
+                            }
+                        },
+                    )
+                else:
+                    # values register themselves later
+                    add_properties(
+                        attribute,
+                        {
+                            "value": {
+                                "description": "Possible values for this attribute (exactly one)",
+                                "oneOf": [],
+                            }
+                        },
+                    )
 
                 already_registered_attribute = schema_json["definitions"].get(
                     attribute_id, None
@@ -173,6 +203,7 @@ def register_attribute_value_sets(schema_json):
                         attribute_sctid_raw, generate_id(clinical_finding_sctid_raw)
                     )
                     if clinical_finding_sctid_raw
+                    and clinical_finding_sctid_raw != "ANY"
                     else generate_attribute_id(attribute_sctid_raw)
                 )
 
@@ -189,9 +220,15 @@ def register_attribute_value_sets(schema_json):
 
             value_ref = {"title": value_name, "$ref": f"#/definitions/{value_id}"}
 
-            schema_json["definitions"][current_attribute_id]["properties"]["value"][
-                "oneOf"
-            ].append(value_ref)
+            attribute_properties = schema_json["definitions"][current_attribute_id][
+                "properties"
+            ]
+            attribute_value_list = (
+                attribute_properties["values"]["items"]["oneOf"]
+                if "values" in attribute_properties
+                else attribute_properties["value"]["oneOf"]
+            )
+            attribute_value_list.append(value_ref)
 
             values.append(value_ref)
 

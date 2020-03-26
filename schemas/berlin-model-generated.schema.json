@@ -706,41 +706,47 @@
           "default": 363698007,
           "description": "Attribute SNOMED CT identifier (64-bit integer)"
         },
-        "value": {
-          "oneOf": [
-            {
-              "title": "Structure of left lower quadrant of abdomen (body structure)",
-              "$ref": "#/definitions/b0a9ca94930dcf992dad1b29343b08ea"
-            },
-            {
-              "title": "Structure of right lower quadrant of abdomen (body structure)",
-              "$ref": "#/definitions/0f7f8cfe7e12c3a4a1558a9c3a1b3454"
-            },
-            {
-              "title": "Structure of left upper quadrant of abdomen (body structure)",
-              "$ref": "#/definitions/0e80a75a59339299ba6e6e117d63397d"
-            },
-            {
-              "title": "Structure of right upper quadrant of abdomen (body structure)",
-              "$ref": "#/definitions/1f75a2370b4f6ed438e01e5d099a4822"
-            },
-            {
-              "title": "Hypogastric region structure (body structure)",
-              "$ref": "#/definitions/858b635cd3ddc74c840e59f9538b3aa0"
-            },
-            {
-              "title": "Epigastric region structure (body structure)",
-              "$ref": "#/definitions/91f6224aca38e8443cace070bb8e723b"
-            },
-            {
-              "title": "Structure of abdominopelvic cavity and/or content of abdominopelvic cavity and/or anterior abdominal wall (body structure)",
-              "$ref": "#/definitions/55cee8576a49af5c9aa1ed552669e8be"
-            },
-            {
-              "title": "Structure of central region of abdomen (body structure)",
-              "$ref": "#/definitions/b6755fcd9c5278c345e863aa3aab09e3"
-            }
-          ]
+        "values": {
+          "type": "array",
+          "description": "Possible values for this attribute (at least one, multi-selection possible)",
+          "items": {
+            "oneOf": [
+              {
+                "title": "Structure of left lower quadrant of abdomen (body structure)",
+                "$ref": "#/definitions/b0a9ca94930dcf992dad1b29343b08ea"
+              },
+              {
+                "title": "Structure of right lower quadrant of abdomen (body structure)",
+                "$ref": "#/definitions/0f7f8cfe7e12c3a4a1558a9c3a1b3454"
+              },
+              {
+                "title": "Structure of left upper quadrant of abdomen (body structure)",
+                "$ref": "#/definitions/0e80a75a59339299ba6e6e117d63397d"
+              },
+              {
+                "title": "Structure of right upper quadrant of abdomen (body structure)",
+                "$ref": "#/definitions/1f75a2370b4f6ed438e01e5d099a4822"
+              },
+              {
+                "title": "Hypogastric region structure (body structure)",
+                "$ref": "#/definitions/858b635cd3ddc74c840e59f9538b3aa0"
+              },
+              {
+                "title": "Epigastric region structure (body structure)",
+                "$ref": "#/definitions/91f6224aca38e8443cace070bb8e723b"
+              },
+              {
+                "title": "Structure of abdominopelvic cavity and/or content of abdominopelvic cavity and/or anterior abdominal wall (body structure)",
+                "$ref": "#/definitions/55cee8576a49af5c9aa1ed552669e8be"
+              },
+              {
+                "title": "Structure of central region of abdomen (body structure)",
+                "$ref": "#/definitions/b6755fcd9c5278c345e863aa3aab09e3"
+              }
+            ]
+          },
+          "uniqueItems": true,
+          "minItems": 1
         },
         "scope": {
           "const": "3a04b8570062b71a018c8bde2a5bdb4c",
@@ -752,7 +758,7 @@
         "id",
         "name",
         "sctid",
-        "value"
+        "values"
       ],
       "additionalProperties": false
     },
@@ -776,6 +782,7 @@
           "description": "Attribute SNOMED CT identifier (64-bit integer)"
         },
         "value": {
+          "description": "Possible values for this attribute (exactly one)",
           "oneOf": [
             {
               "title": "Sharp sensation quality (qualifier value)",
@@ -820,6 +827,7 @@
           "description": "Attribute SNOMED CT identifier (64-bit integer)"
         },
         "value": {
+          "description": "Possible values for this attribute (exactly one)",
           "oneOf": [
             {
               "title": "Mild (qualifier value)",
@@ -864,6 +872,7 @@
           "description": "Attribute custom identifier"
         },
         "value": {
+          "description": "Possible values for this attribute (exactly one)",
           "oneOf": [
             {
               "title": "less than a day",
@@ -967,28 +976,34 @@
           "default": 249622004,
           "description": "Attribute SNOMED CT identifier (64-bit integer)"
         },
-        "value": {
-          "oneOf": [
-            {
-              "title": "Blood (substance)",
-              "$ref": "#/definitions/0f77ba828c65101cf7fb943eb34f2a21"
-            },
-            {
-              "title": "Water (substance)",
-              "$ref": "#/definitions/c53db84792da14ac9ae1daf042b5fad8"
-            },
-            {
-              "title": "Mucus (substance)",
-              "$ref": "#/definitions/d07bc7629cfcc98a5712482ad6d226e8"
-            }
-          ]
+        "values": {
+          "type": "array",
+          "description": "Possible values for this attribute (at least one, multi-selection possible)",
+          "items": {
+            "oneOf": [
+              {
+                "title": "Blood (substance)",
+                "$ref": "#/definitions/0f77ba828c65101cf7fb943eb34f2a21"
+              },
+              {
+                "title": "Water (substance)",
+                "$ref": "#/definitions/c53db84792da14ac9ae1daf042b5fad8"
+              },
+              {
+                "title": "Mucus (substance)",
+                "$ref": "#/definitions/d07bc7629cfcc98a5712482ad6d226e8"
+              }
+            ]
+          },
+          "uniqueItems": true,
+          "minItems": 1
         }
       },
       "required": [
         "id",
         "name",
         "sctid",
-        "value"
+        "values"
       ],
       "additionalProperties": false
     },
