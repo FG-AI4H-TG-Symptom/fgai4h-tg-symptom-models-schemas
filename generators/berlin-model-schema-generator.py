@@ -1,73 +1,14 @@
 import csv
 import json
-import hashlib
 
-
-def const(value, description):
-    return {"const": value, "default": value, "description": description}
-
-
-def generate_id(value):
-    return hashlib.md5(str(value).encode("utf-8")).hexdigest()
-
-
-def generate_attribute_id(attribute_sctid, symptom_id=None):
-    return generate_id(
-        f"{symptom_id}-{attribute_sctid}" if symptom_id is not None else attribute_sctid
-    )
-
-
-def object_template(
-    concept_name: str,
-    id_raw: str,
-    name: str,
-    id_generator=lambda id_raw: generate_id(id_raw),
-):
-    sctid = None
-    custom_id = None
-    if "CUSTOM:" in id_raw:
-        custom_id = int(id_raw.split(":")[1])
-    else:
-        sctid = int(id_raw)
-    id_ = id_generator(id_raw)
-
-    object_ = {
-        "type": "object",
-        "title": name,
-        "properties": {
-            "id": const(id_, f"{concept_name} ID"),
-            "name": const(name, f"{concept_name} name"),
-        },
-        "required": ["id", "name"],
-        "additionalProperties": False,
-    }
-
-    if sctid is not None:
-        add_properties(
-            object_,
-            {
-                "sctid": const(
-                    sctid, f"{concept_name} SNOMED CT identifier (64-bit integer)"
-                )
-            },
-        )
-
-    if custom_id is not None:
-        add_properties(
-            object_, {"customId": const(custom_id, f"{concept_name} custom identifier")}
-        )
-
-    return object_
-
-
-def lookup(json_schema_object, property_name):
-    return json_schema_object["properties"][property_name]["const"]
-
-
-def add_properties(json_schema_object, properties: dict):
-    for key, value in properties.items():
-        json_schema_object["properties"][key] = value
-        json_schema_object["required"].append(key)
+from .helpers import (
+    create_const,
+    lookup_const,
+    generate_id,
+    generate_attribute_id,
+    concept_template,
+    add_properties,
+)
 
 
 def register_diagnosis(schema_json):
@@ -79,10 +20,10 @@ def register_diagnosis(schema_json):
                 continue
 
             [condition_sctid_raw, condition_name] = entry
-            condition = object_template(
+            condition = concept_template(
                 "Condition", condition_sctid_raw, condition_name
             )
-            condition_id = lookup(condition, "id")
+            condition_id = lookup_const(condition, "id")
 
             schema_json["definitions"][condition_id] = condition
 
@@ -120,12 +61,12 @@ def register_clinical_findings_and_attributes(schema_json):
             )
 
             if clinical_finding_sctid_raw:
-                current_clinical_finding = object_template(
+                current_clinical_finding = concept_template(
                     "Clinical finding",
                     clinical_finding_sctid_raw,
                     clinical_finding_name,
                 )
-                clinical_finding_id = lookup(current_clinical_finding, "id")
+                clinical_finding_id = lookup_const(current_clinical_finding, "id")
 
                 add_properties(
                     current_clinical_finding,
@@ -152,7 +93,7 @@ def register_clinical_findings_and_attributes(schema_json):
                 )
 
             if attribute_sctid_raw:
-                attribute = object_template(
+                attribute = concept_template(
                     "Attribute",
                     attribute_sctid_raw,
                     attribute_name,
@@ -162,7 +103,7 @@ def register_clinical_findings_and_attributes(schema_json):
                         else generate_attribute_id(raw_id)
                     ),
                 )
-                attribute_id = lookup(attribute, "id")
+                attribute_id = lookup_const(attribute, "id")
                 add_properties(
                     attribute, {"value": {"oneOf": []}}
                 )  # values register themselves later
@@ -174,7 +115,7 @@ def register_clinical_findings_and_attributes(schema_json):
                 attribute_ref = {
                     "title": attribute_name
                     if already_registered_attribute is None
-                    else lookup(already_registered_attribute, "name"),
+                    else lookup_const(already_registered_attribute, "name"),
                     "$ref": f"#/definitions/{attribute_id}",
                 }
 
@@ -190,7 +131,7 @@ def register_clinical_findings_and_attributes(schema_json):
                     continue
 
                 if attribute_scoped_to_clinical_finding:
-                    attribute["properties"]["scope"] = const(
+                    attribute["properties"]["scope"] = create_const(
                         clinical_finding_id,
                         "ID of clinical finding this attribute is scoped to",
                     )
@@ -235,7 +176,7 @@ def register_attribute_value_sets(schema_json):
                     else generate_attribute_id(attribute_sctid_raw)
                 )
 
-            value = object_template(
+            value = concept_template(
                 "Value",
                 value_sctid_raw,
                 value_name,
@@ -243,7 +184,7 @@ def register_attribute_value_sets(schema_json):
                     f"{current_attribute_id}-{value_sctid_raw}"
                 ),
             )
-            value_id = lookup(value, "id")
+            value_id = lookup_const(value, "id")
             schema_json["definitions"][value_id] = value
 
             value_ref = {"title": value_name, "$ref": f"#/definitions/{value_id}"}
