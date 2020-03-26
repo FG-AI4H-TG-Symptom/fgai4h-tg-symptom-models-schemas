@@ -2,8 +2,12 @@
   "caseSetName": "Berlin Model Official Doctor Cases",
   "cases": [
     {
+      "caseId": "CC_1",
+      "metaData": {
+        "description": "Berlin Model Official Doctor Cases – Simple UTI",
+        "caseCreator": "CoolCompany / John Smith"
+      },
       "caseData": {
-        "caseId": "CC_1",
         "profileInformation": {
           "age": 25,
           "biologicalSex": "female"

@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://raw.githubusercontent.com/FG-AI4H-TG-Symptom/fgai4h-tg-symptom-models-schemas/master/schemas/berlin-model-generated.schema.json",
+  "$id": "https://raw.githubusercontent.com/FG-AI4H-TG-Symptom/fgai4h-tg-symptom-models-schemas/master/schemas/berlin-model.schema.json",
   "title": "Berlin Model Cases Schema",
   "description": "FGAI4H TG Symptom Cases Schema \u2013 Berlin (generated)",
   "$comment": "This model is auto-generated! Don't manually make changes you wish to persist.",
@@ -26,6 +26,10 @@
     "case": {
       "type": "object",
       "properties": {
+        "caseId": {
+          "type": "string",
+          "description": "Case ID"
+        },
         "metaData": {
           "type": "object",
           "properties": {
@@ -50,10 +54,6 @@
         "caseData": {
           "type": "object",
           "properties": {
-            "caseId": {
-              "type": "string",
-              "description": "Case ID"
-            },
             "profileInformation": {
               "type": "object",
               "description": "Patient profile information",
@@ -88,7 +88,6 @@
             }
           },
           "required": [
-            "caseId",
             "profileInformation",
             "presentingComplaint",
             "otherFeatures"
@@ -135,6 +134,8 @@
         }
       },
       "required": [
+        "caseId",
+        "metaData",
         "caseData",
         "valuesToPredict"
       ],

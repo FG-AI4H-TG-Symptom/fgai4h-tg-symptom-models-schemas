@@ -26,6 +26,10 @@
     "case": {
       "type": "object",
       "properties": {
+        "caseId": {
+          "type": "string",
+          "description": "Case ID"
+        },
         "metaData": {
           "type": "object",
           "properties": {
@@ -50,10 +54,6 @@
         "caseData": {
           "type": "object",
           "properties": {
-            "caseId": {
-              "type": "string",
-              "description": "Case ID"
-            },
             "profileInformation": {
               "type": "object",
               "description": "Patient profile information",
@@ -88,7 +88,6 @@
             }
           },
           "required": [
-            "caseId",
             "profileInformation",
             "presentingComplaint",
             "otherFeatures"
@@ -135,6 +134,8 @@
         }
       },
       "required": [
+        "caseId",
+        "metaData",
         "caseData",
         "valuesToPredict"
       ],
