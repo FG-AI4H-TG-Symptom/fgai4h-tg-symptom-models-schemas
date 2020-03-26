@@ -244,7 +244,7 @@ def generate_berlin_model_schema():
 
     base_schema_json["$id"] = (
         "https://raw.githubusercontent.com/FG-AI4H-TG-Symptom/"
-        "fgai4h-tg-symptom-models-schemas/master/schemas/berlin-model-generated.schema.json"
+        "fgai4h-tg-symptom-models-schemas/master/schemas/berlin-model.schema.json"
     )
     base_schema_json[
         "description"
@@ -258,7 +258,7 @@ def generate_berlin_model_schema():
     register_attribute_value_sets(base_schema_json)
 
     with open(
-        "../schemas/berlin-model-generated.schema.json", "w"
+            "../schemas/berlin-model.schema.json", "w"
     ) as generated_schema_json_file:
         json.dump(base_schema_json, generated_schema_json_file, indent=2)
 
