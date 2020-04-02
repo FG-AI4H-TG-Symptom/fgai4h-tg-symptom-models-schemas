@@ -63,11 +63,7 @@
                   "description": "Age"
                 },
                 "biologicalSex": {
-                  "type": "string",
-                  "enum": [
-                    "male",
-                    "female"
-                  ],
+                  "$ref": "#/definitions/biologicalSex",
                   "description": "Biological sex"
                 }
               },
@@ -98,12 +94,8 @@
           "type": "object",
           "properties": {
             "expectedTriageLevel": {
-              "type": "string",
-              "enum": [
-                "EC",
-                "PC",
-                "SC"
-              ]
+              "$ref": "#/definitions/expectedTriageLevel",
+              "description": "Expected triage level"
             },
             "expectedCondition": {
               "$ref": "#/definitions/condition"
@@ -140,6 +132,21 @@
         "valuesToPredict"
       ],
       "additionalProperties": false
+    },
+    "biologicalSex": {
+      "type": "string",
+      "enum": [
+        "male",
+        "female"
+      ]
+    },
+    "expectedTriageLevel": {
+      "type": "string",
+      "enum": [
+        "EC",
+        "PC",
+        "SC"
+      ]
     },
     "clinicalFinding": {
       "oneOf": [
