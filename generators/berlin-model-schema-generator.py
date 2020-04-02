@@ -5,7 +5,6 @@ from generators.helpers import (
     create_const,
     lookup_const,
     generate_id,
-    generate_attribute_id,
     concept_template,
     add_properties,
 )
@@ -104,11 +103,7 @@ def register_clinical_findings_and_attributes(schema_json):
                     "Attribute",
                     attribute_sctid_raw,
                     attribute_name,
-                    id_generator=lambda raw_id: (
-                        generate_attribute_id(raw_id, clinical_finding_id)
-                        if attribute_scoped_to_clinical_finding
-                        else generate_attribute_id(raw_id)
-                    ),
+                    scope=(clinical_finding_id if attribute_scoped_to_clinical_finding else None)
                 )
                 attribute_id = lookup_const(attribute, "id")
                 if attribute_value_multi_select == "MULTI":
@@ -198,22 +193,20 @@ def register_attribute_value_sets(schema_json):
             ] = entry
 
             if attribute_sctid_raw:
-                current_attribute_id = (
-                    generate_attribute_id(
-                        attribute_sctid_raw, generate_id(clinical_finding_sctid_raw)
-                    )
+                current_attribute_id = generate_id(
+                    "Attribute",
+                    attribute_sctid_raw,
+                    generate_id("Clinical finding", clinical_finding_sctid_raw)
                     if clinical_finding_sctid_raw
                     and clinical_finding_sctid_raw != "ANY"
-                    else generate_attribute_id(attribute_sctid_raw)
+                    else None,
                 )
 
             value = concept_template(
                 "Value",
                 value_sctid_raw,
                 value_name,
-                id_generator=lambda _: generate_id(
-                    f"{current_attribute_id}-{value_sctid_raw}"
-                ),
+                scope=f"{current_attribute_id}",
             )
             value_id = lookup_const(value, "id")
             schema_json["definitions"][value_id] = value
@@ -257,9 +250,7 @@ def generate_berlin_model_schema():
     register_clinical_findings_and_attributes(base_schema_json)
     register_attribute_value_sets(base_schema_json)
 
-    with open(
-            "../schemas/berlin-model.schema.json", "w"
-    ) as generated_schema_json_file:
+    with open("../schemas/berlin-model.schema.json", "w") as generated_schema_json_file:
         json.dump(base_schema_json, generated_schema_json_file, indent=2)
 
 

@@ -1,4 +1,4 @@
-Clinical finding SCTID,Clinical finding term,Attribute SCTID,Attribute term,SCT Concept Model,Value multi-select
+Clinical finding SCTID,Clinical finding term,Attribute SCTID or custom ID,Attribute term,SCT Concept Model,Value multi-select
 21522001,Abdominal pain (finding),363698007,Finding site (attribute),TRUE,MULTI
 ,,364625007,Characteristic of pain (observable entity),FALSE,SINGLE
 ,,406127006,Pain intensity (observable entity),FALSE,SINGLE

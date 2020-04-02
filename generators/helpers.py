@@ -1,4 +1,5 @@
 import hashlib
+from typing import Optional
 
 
 def create_const(value, description):
@@ -9,21 +10,18 @@ def lookup_const(json_schema_object, property_name):
     return json_schema_object["properties"][property_name]["const"]
 
 
-def generate_id(value):
-    return hashlib.md5(str(value).encode("utf-8")).hexdigest()
-
-
-def generate_attribute_id(attribute_sctid, symptom_id=None):
-    return generate_id(
-        f"{symptom_id}-{attribute_sctid}" if symptom_id is not None else attribute_sctid
+def generate_id(concept_name: str, concept_id: str, scope: Optional[str] = None) -> str:
+    id_source = (
+        concept_name.lower().replace(" ", "_")
+        + ":"
+        + concept_id
+        + ("|" + scope if scope else "")
     )
+    return hashlib.md5(id_source.encode("utf-8")).hexdigest()
 
 
 def concept_template(
-    concept_name: str,
-    id_raw: str,
-    name: str,
-    id_generator=lambda id_raw: generate_id(id_raw),
+    concept_name: str, id_raw: str, name: str, scope: Optional[str] = None,
 ):
     sctid = None
     custom_id = None
@@ -31,7 +29,7 @@ def concept_template(
         custom_id = int(id_raw.split(":")[1])
     else:
         sctid = int(id_raw)
-    id_ = id_generator(id_raw)
+    id_ = generate_id(concept_name, id_raw, scope)
 
     concept = {
         "type": "object",
