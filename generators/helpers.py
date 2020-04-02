@@ -1,4 +1,5 @@
 import hashlib
+from typing import Optional
 
 
 def create_const(value, description):
@@ -9,13 +10,10 @@ def lookup_const(json_schema_object, property_name):
     return json_schema_object["properties"][property_name]["const"]
 
 
-def generate_id(value):
-    return hashlib.md5(str(value).encode("utf-8")).hexdigest()
-
-
-def generate_attribute_id(attribute_sctid, symptom_id=None):
-    return generate_id(
-        f"{symptom_id}-{attribute_sctid}" if symptom_id is not None else attribute_sctid
+def generate_id(concept_name: str, name: str, scope: Optional[str] = None) -> str:
+    name = name[:name.find('(')].strip() if '(' in name else name
+    return (concept_name + "@" + name).lower().replace(" ", "_").replace("/", "-") + (
+        "$" + scope if scope else ""
     )
 
 
@@ -23,15 +21,12 @@ def concept_template(
     concept_name: str,
     id_raw: str,
     name: str,
-    id_generator=lambda id_raw: generate_id(id_raw),
+    scope: Optional[str] = None,
 ):
     sctid = None
-    custom_id = None
-    if "CUSTOM:" in id_raw:
-        custom_id = int(id_raw.split(":")[1])
-    else:
+    if "CUSTOM" not in id_raw:
         sctid = int(id_raw)
-    id_ = id_generator(id_raw)
+    id_ = generate_id(concept_name, name, scope)
 
     concept = {
         "type": "object",
@@ -52,12 +47,6 @@ def concept_template(
                     sctid, f"{concept_name} SNOMED CT identifier (64-bit integer)"
                 )
             },
-        )
-
-    if custom_id is not None:
-        add_properties(
-            concept,
-            {"customId": create_const(custom_id, f"{concept_name} custom identifier")},
         )
 
     return concept
