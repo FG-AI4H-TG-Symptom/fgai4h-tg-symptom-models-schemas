@@ -8,6 +8,7 @@
   "properties": {
     "caseSetName": {
       "type": "string",
+      "minLength": 1,
       "description": "Name of the case set"
     },
     "cases": {
@@ -28,6 +29,7 @@
       "properties": {
         "caseId": {
           "type": "string",
+          "minLength": 1,
           "description": "Case ID"
         },
         "metaData": {
@@ -35,14 +37,17 @@
           "properties": {
             "description": {
               "type": "string",
+              "minLength": 1,
               "description": "Human readable case description"
             },
             "caseCreator": {
               "type": "string",
+              "minLength": 1,
               "description": "Company and/or individual identifier of the case's creator"
             },
             "spreadsheetCaseId": {
               "type": "string",
+              "minLength": 1,
               "description": "Identifier of this case in the originating spreadsheet"
             }
           },
