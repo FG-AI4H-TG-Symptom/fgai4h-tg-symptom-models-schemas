@@ -78,8 +78,13 @@
               ],
               "additionalProperties": false
             },
-            "presentingComplaint": {
-              "$ref": "#/definitions/clinicalFinding"
+            "presentingComplaints": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/clinicalFinding"
+              },
+              "minItems": 1,
+              "maxItems": 1
             },
             "otherFeatures": {
               "type": "array",
@@ -90,7 +95,7 @@
           },
           "required": [
             "profileInformation",
-            "presentingComplaint",
+            "presentingComplaints",
             "otherFeatures"
           ],
           "additionalProperties": false
