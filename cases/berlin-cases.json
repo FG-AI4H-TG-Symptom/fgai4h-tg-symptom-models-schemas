@@ -15,38 +15,48 @@
         "presentingComplaints": [
           {
             "id": "f531a0d969119b7ab1f8e76424516fed",
-            "sctid": 21522001,
             "name": "Abdominal pain (finding)",
+            "standardOntologyUris": [
+              "http://snomed.info/id/21522001"
+            ],
             "state": "present",
             "attributes": [
               {
                 "id": "0908b0d8834918b9586a70bca644dcee",
-                "sctid": 406127006,
                 "name": "Pain intensity (observable entity)",
+                "standardOntologyUris": [
+                  "http://snomed.info/id/406127006"
+                ],
                 "value": {
                   "id": "5622e2233ff9944412b2161ae720fff9",
-                  "sctid": 6736007,
+                  "standardOntologyUris": [
+                    "http://snomed.info/id/6736007"
+                  ],
                   "name": "Moderate (severity modifier) (qualifier value)"
                 }
               },
               {
                 "id": "7a0ca5ec6baf2cfb7e516f031a9e5d3c",
-                "customId": 1,
                 "name": "Time since onset",
+                "standardOntologyUris": [],
                 "value": {
                   "id": "4395912053989fa30a3b041f1fb90a23",
-                  "customId": 102,
-                  "name": "3 days - to 1 week"
+                  "name": "3 days - to 1 week",
+                  "standardOntologyUris": []
                 }
               },
               {
                 "id": "7ede29da24bd64547ef1eb7cd5ae2d8e",
-                "sctid": 364625007,
                 "name": "Characteristic of pain (observable entity)",
+                "standardOntologyUris": [
+                  "http://snomed.info/id/364625007"
+                ],
                 "value": {
                   "id": "4403bcc436c90f18e489150ca0e37ab9",
-                  "sctid": 410709000,
-                  "name": "Cramping sensation quality (qualifier value)"
+                  "name": "Cramping sensation quality (qualifier value)",
+                  "standardOntologyUris": [
+                    "http://snomed.info/id/410709000"
+                  ]
                 }
               }
             ]
@@ -55,21 +65,27 @@
         "otherFeatures": [
           {
             "id": "b2003899e659fd3b4b9ccfdcc731d5e8",
-            "sctid": 49650001,
             "name": "Dysuria (finding)",
+            "standardOntologyUris": [
+              "http://snomed.info/id/49650001"
+            ],
             "state": "absent",
             "attributes": []
           },
           {
             "id": "5d60ebfd3b9ee2a12b816a66cd0d98e6",
-            "sctid": 162116003,
             "name": "Increased frequency of urination (finding)",
+            "standardOntologyUris": [
+              "http://snomed.info/id/162116003"
+            ],
             "state": "present"
           },
           {
             "id": "aa4a9df97b79106fafcf9104b43836fd",
-            "sctid": 84292000,
             "name": "Menstrual period late (finding)",
+            "standardOntologyUris": [
+              "http://snomed.info/id/84292000"
+            ],
             "state": "unsure"
           }
         ]
@@ -78,21 +94,27 @@
         "expectedTriageLevel": "PC",
         "expectedCondition": {
           "id": "84e38911d4dadafc033e196683720b70",
-          "sctid": 68566005,
-          "name": "Urinary tract infectious disease (disorder)"
+          "name": "Urinary tract infectious disease (disorder)",
+          "standardOntologyUris": [
+            "http://snomed.info/id/68566005"
+          ]
         },
         "otherRelevantDifferentials": [
           {
             "id": "9a40d00e1b3ae580a85fb303778873ca",
-            "sctid": 34801009,
-            "name": "Ectopic pregnancy (disorder)"
+            "name": "Ectopic pregnancy (disorder)",
+            "standardOntologyUris": [
+              "http://snomed.info/id/34801009"
+            ]
           }
         ],
         "impossibleConditions": [],
         "correctCondition": {
           "id": "84e38911d4dadafc033e196683720b70",
-          "sctid": 68566005,
-          "name": "Urinary tract infectious disease (disorder)"
+          "name": "Urinary tract infectious disease (disorder)",
+          "standardOntologyUris": [
+            "http://snomed.info/id/68566005"
+          ]
         }
       }
     }

@@ -25,9 +25,7 @@ def concept_template(
 ):
     sctid = None
     custom_id = None
-    if "CUSTOM:" in id_raw:
-        custom_id = int(id_raw.split(":")[1])
-    else:
+    if "CUSTOM" not in id_raw:
         sctid = int(id_raw)
     id_ = generate_id(concept_name, id_raw, scope)
 
@@ -37,26 +35,14 @@ def concept_template(
         "properties": {
             "id": create_const(id_, f"{concept_name} ID"),
             "name": create_const(name, f"{concept_name} name"),
+            "standardOntologyUris": create_const([], f"URIs referencing this {concept_name.lower()} in standard ontologies")
         },
-        "required": ["id", "name"],
+        "required": ["id", "name", "standardOntologyUris"],
         "additionalProperties": False,
     }
 
     if sctid is not None:
-        add_properties(
-            concept,
-            {
-                "sctid": create_const(
-                    sctid, f"{concept_name} SNOMED CT identifier (64-bit integer)"
-                )
-            },
-        )
-
-    if custom_id is not None:
-        add_properties(
-            concept,
-            {"customId": create_const(custom_id, f"{concept_name} custom identifier")},
-        )
+        concept['properties']['standardOntologyUris']['const'].append(f'http://snomed.info/id/{sctid}')
 
     return concept
 

@@ -167,13 +167,18 @@
           "type": "string",
           "description": "Clinical finding ID"
         },
-        "sctid": {
-          "type": "integer",
-          "description": "Clinical finding SNOMED CT identifier (64-bit integer)"
-        },
         "name": {
           "type": "string",
           "description": "Name of symptom"
+        },
+        "standardOntologyUris": {
+          "type": "array",
+          "description": "URIs referencing this clinical finding in standard ontologies",
+          "items": {
+            "type": "string",
+            "format": "uri"
+          },
+          "default": []
         },
         "state": {
           "$ref": "#/definitions/clinicalFindingState"
@@ -188,6 +193,7 @@
       "required": [
         "id",
         "name",
+        "standardOntologyUris",
         "state"
       ],
       "additionalProperties": false
@@ -208,17 +214,18 @@
           "type": "string",
           "description": "Attribute ID"
         },
-        "sctid": {
-          "type": "integer",
-          "description": "Attribute SNOMED CT identifier (64-bit integer)"
-        },
-        "customId": {
-          "type": "integer",
-          "description": "Custom identifier"
-        },
         "name": {
           "type": "string",
           "description": "Attribute name"
+        },
+        "standardOntologyUris": {
+          "type": "array",
+          "description": "URIs referencing this value in standard ontologies",
+          "items": {
+            "type": "string",
+            "format": "uri"
+          },
+          "default": []
         },
         "scope": {
           "type": "string",
@@ -231,6 +238,7 @@
       "required": [
         "id",
         "name",
+        "standardOntologyUris",
         "value"
       ],
       "additionalProperties": false
@@ -242,22 +250,24 @@
           "type": "string",
           "description": "Value ID"
         },
-        "sctid": {
-          "type": "integer",
-          "description": " Value SNOMED CT identifier (64-bit integer)"
-        },
-        "customId": {
-          "type": "integer",
-          "description": "Custom identifier"
-        },
         "name": {
           "type": "string",
           "description": "Value name"
+        },
+        "standardOntologyUris": {
+          "type": "array",
+          "description": "URIs referencing this value in standard ontologies",
+          "items": {
+            "type": "string",
+            "format": "uri"
+          },
+          "default": []
         }
       },
       "required": [
         "id",
-        "name"
+        "name",
+        "standardOntologyUris"
       ],
       "additionalProperties": false
     },
@@ -268,22 +278,24 @@
           "type": "string",
           "description": "Condition ID"
         },
-        "sctid": {
-          "type": "integer",
-          "description": "Condition SNOMED CT identifier (64-bit integer)"
-        },
-        "customId": {
-          "type": "integer",
-          "description": "Custom identifier"
-        },
         "name": {
           "type": "string",
           "description": "Condition name"
+        },
+        "standardOntologyUris": {
+          "type": "array",
+          "description": "URIs referencing this condition in standard ontologies",
+          "items": {
+            "type": "string",
+            "format": "uri"
+          },
+          "default": []
         }
       },
       "required": [
         "id",
-        "name"
+        "name",
+        "standardOntologyUris"
       ],
       "additionalProperties": false
     }
