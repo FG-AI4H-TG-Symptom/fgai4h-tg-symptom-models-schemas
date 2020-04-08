@@ -23,6 +23,7 @@
     "caseSetName",
     "cases"
   ],
+  "additionalProperties": false,
   "definitions": {
     "case": {
       "type": "object",
