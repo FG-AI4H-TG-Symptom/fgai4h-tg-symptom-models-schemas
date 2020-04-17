@@ -78,7 +78,8 @@
             "standardOntologyUris": [
               "http://snomed.info/id/162116003"
             ],
-            "state": "present"
+            "state": "present",
+            "attributes": []
           },
           {
             "id": "aa4a9df97b79106fafcf9104b43836fd",
@@ -86,7 +87,8 @@
             "standardOntologyUris": [
               "http://snomed.info/id/84292000"
             ],
-            "state": "unsure"
+            "state": "unsure",
+            "attributes": []
           }
         ]
       },

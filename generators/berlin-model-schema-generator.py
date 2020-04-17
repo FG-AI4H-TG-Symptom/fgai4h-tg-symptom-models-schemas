@@ -73,19 +73,18 @@ def register_clinical_findings_and_attributes(schema_json):
                     {"state": {"$ref": "#/definitions/clinicalFindingState"}},
                 )
 
-                if attribute_sctid_raw:
-                    add_properties(
-                        current_clinical_finding,
-                        {
-                            "attributes": {
-                                "type": "array",
-                                "items": {
-                                    "oneOf": []
-                                },  # attributes register themselves later
-                                "uniqueItems": True,
-                            }
-                        },
-                    )
+                add_properties(
+                    current_clinical_finding,
+                    {
+                        "attributes": {
+                            "type": "array",
+                            "items": {
+                                "oneOf": []
+                            },  # attributes register themselves later
+                            "uniqueItems": True,
+                        }
+                    },
+                )
 
                 schema_json["definitions"][
                     clinical_finding_id
@@ -168,6 +167,14 @@ def register_clinical_findings_and_attributes(schema_json):
         schema_json["definitions"]["clinicalFinding"] = {"oneOf": clinical_findings}
         # likely not necessary: attributes are never referenced generically, always explicitly by a linked symptom
         schema_json["definitions"]["attribute"] = {"oneOf": attributes}
+
+        for clinical_finding in clinical_findings:
+            clinical_finding_id = clinical_finding['$ref'].split('/')[-1]
+            clinical_finding_definition = schema_json["definitions"][clinical_finding_id]
+            if len(clinical_finding_definition['properties']['attributes']['items']['oneOf']) == 0:
+                del clinical_finding_definition['properties']['attributes']['items']
+
+                clinical_finding_definition['properties']['attributes']['const'] = []
 
 
 def register_attribute_value_sets(schema_json):

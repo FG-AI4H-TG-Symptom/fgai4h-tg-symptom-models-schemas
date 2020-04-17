@@ -188,14 +188,16 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/attribute"
-          }
+          },
+          "default": []
         }
       },
       "required": [
         "id",
         "name",
         "standardOntologyUris",
-        "state"
+        "state",
+        "attributes"
       ],
       "additionalProperties": false
     },
